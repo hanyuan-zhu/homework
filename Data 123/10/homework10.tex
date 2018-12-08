@@ -1,0 +1,167 @@
+\documentclass{article}
+
+%change the margin of the paper
+%\usepackage[legalpaper, margin=0.1in]{geometry}
+%using the \substack
+\usepackage{amsmath}
+% \mathbbm{}
+\usepackage{bbm}
+
+% NOTE \pdv  partial differential equation
+\usepackage{physics}
+
+% hyperlink Here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% \cancelto{0}{A} to cross the A to 0
+\usepackage{cancel}
+
+
+% this is the package for block comment \begin{comment} and \end{comment}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+% For multiple rows in tabular environment.
+\usepackage{multirow}
+% use this package to strikeout the word /st{}
+%the color package is for the \textcolor{red} to highlight the text
+\usepackage{color,soul}
+% to define newcolumntype and \arraybackslash
+\usepackage{array}
+% hyperref is to call /url. hyphen packege to avoid that the url is too long
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%Todo list, \newlist \setlist...
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% for image inserting
+\usepackage{graphicx}
+\graphicspath{./Desktop/Homework/123/7/}
+\usepackage{subfig}
+
+% \iff \leqlsant
+\usepackage{amssymb}
+
+
+
+% Code block begin(lstlisting) and end(lstlisting)
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+%NOTE: Change the "language" parameter here
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Macros
+%%%%%%%%%%%% Text Color %%%%%%%%%%%%%%%
+\definecolor{mypink1}{RGB}{219, 48, 233}
+\definecolor{myred1}{RGB}{231, 76, 60}
+\definecolor{myred2}{RGB}{203, 67, 53}
+\definecolor{myblue1}{RGB}{52, 152, 219}
+\definecolor{mygray}{gray}{0.6}
+
+%% Table Style
+\newcolumntype{C}{>{\center\arraybackslash}m{.70\columnwidth}}
+\newcolumntype{Y}{>{\center\arraybackslash}m{2cm}}
+
+
+
+%NOTE title Here
+\title{Homework 8 Numerical Analysis}
+\author{Hanyuan Zhu}
+\date{}
+
+
+
+%%%%%%%%%%%%% NOTE Begin of Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\section*{Question2}
+
+
+\subsection*{2a. }
+
+\begin{equation}
+  \begin{split}
+    y_i (w^T x_i + b) \geq 1 - \xi_i\\
+    \xi_i \geq 1 - y_i (w^T x_i + b)\\
+  \end{split}
+\end{equation}
+
+If $1 - y_i (w^T x_i + b) > 0 $, $\xi_i^2 \geq (1 - y_i (w^T x_i + b))^2 $ ;\\
+if $1 - y_i (w^T x_i + b) < 0 $, $ |\xi_i| > 0 >  1 - y_i (w^T x_i + b) $.
+
+\begin{equation}
+  |\xi_i|^2 \geq
+  \begin{cases}
+    (1 - y_i (w^T x_i + b))^2, &  y_i (w^T x_i + b) < 1 \\
+    0 , & y_i (w^T x_i + b)>1
+  \end{cases}
+\end{equation}
+
+$$ \Vert \xi \Vert^2 = \sum_i|\xi_i|^2  $$
+
+Substitute above into $G(w, b, \xi)$, we have
+
+\begin{equation}
+  \begin{split}
+    G(w, b, \xi) &= \Vert w \Vert^2 + \alpha  \Vert \xi \Vert^2\\
+    &= \Vert w \Vert^2 + \alpha \sum_i|\xi_i|^2\\
+    &= \Vert w \Vert^2 + \alpha \sum_i \max(0,(1 - y_i (w^T x_i + b)))^2\\
+    &= F(w, b)
+  \end{split}
+\end{equation}
+
+\subsection*{2b. }
+
+We construct the Lagrangian for our problem
+\begin{equation}
+  \begin{split}
+    L(w, b, \alpha) &= \Vert w \Vert^2 + \alpha \Vert \xi \Vert^2 + \sum_i \lumbda_i (1 - y_i (w^T x_i + b))^2\\
+    &= \frac{1}{2}\Vert w \Vert^2 + \sum_i \alpha_i (1 + y_i^2 (w^T x_i + b)^2 - 2 y_i (w^T x_i + b))\\
+    &= \frac{1}{2}\Vert w \Vert^2 + \sum_i \alpha_i (1 + y_i^2 (\Vert w \Vert^2 \Vert x_i \Vert^2 + b^2 + 2 b x_i^T w  ) - 2 y_i ( x_i^T w + b))\\
+    \pdv{L}{w} &=  w +  \sum_i \alpha_i ( y_i^2 (2\Vert x_i \Vert^2 w + 2 b x_i^T )- 2 y_i x_i ^ T ) = 0 \\
+    \sum_i  w ( \frac{1}{n} + 2 \alpha_i &( y_i^2 \Vert x_i \Vert^2 ) = \sum_i 2 \alpha_i y_i x_i ^ T ( 1 - y_i b  )\\
+    w ( \frac{1}{n} + 2 \alpha_i &( y_i^2 \Vert x_i \Vert^2 ) = 2 \alpha_i y_i x_i ^ T ( 1 - y_i b  )\\
+  \end{split}
+\end{equation}
+
+
+
+\section*{Question3}
+\subsection*{3a. }
+Suppose if there is only one point as a support vector, that means all geometric margin are larger then the minimum geometric margin $ \gamma_0 = \min \gamma_i = \min y_i (w^T x_i + b) $, except one point $(y_0,x_0)$.
+Since the hyperplane bisect the data, there is a point on different side such that, for $y_i \neq y_0 $, $ \gamma_1 = \min \gamma_i = \min y_i (w^T x_i + b) $. Then we have $ \gamma_1 +  \gamma_0 > 2  \gamma_0$ , which means the hyperplane is not margin-maximal.
+
+\subsection*{3b. }
+Yes, there could be more than 2 support vectors. In a 2-D data space, 3 data points which can form a isosceles triangle, then all three points will be the support vectors.
+
+
+\end{document}

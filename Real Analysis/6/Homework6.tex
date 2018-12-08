@@ -1,0 +1,290 @@
+\documentclass{article}
+
+%change the margin of the paper
+%\usepackage[legalpaper, margin=0.1in]{geometry}
+%using the \substack
+\usepackage{amsmath}
+% \mathbbm{}
+\usepackage{bbm}
+
+% NOTE \pdv  partial differential equation
+\usepackage{physics}
+
+% hyperlink Here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% this is the package for block comment \begin{comment} and \end{comment}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+% For multiple rows in tabular environment.
+\usepackage{multirow}
+% use this package to strikeout the word /st{}
+%the color package is for the \textcolor{red} to highlight the text
+\usepackage{color,soul}
+% to define newcolumntype and \arraybackslash
+\usepackage{array}
+% hyperref is to call /url. hyphen packege to avoid that the url is too long
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%Todo list, \newlist \setlist...
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% for image inserting
+\usepackage{graphicx}
+\graphicspath{./Desktop/Homework/123/7/}
+\usepackage{subfig}
+
+% \iff \leqlsant
+\usepackage{amssymb}
+
+
+
+% Code block begin(lstlisting) and end(lstlisting)
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+%NOTE: Change the "language" parameter here
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Macros
+%%%%%%%%%%%% Text Color %%%%%%%%%%%%%%%
+\definecolor{mypink1}{RGB}{219, 48, 233}
+\definecolor{myred1}{RGB}{231, 76, 60}
+\definecolor{myred2}{RGB}{203, 67, 53}
+\definecolor{myblue1}{RGB}{52, 152, 219}
+\definecolor{mygray}{gray}{0.6}
+
+%% Table Style
+\newcolumntype{C}{>{\center\arraybackslash}m{.70\columnwidth}}
+\newcolumntype{Y}{>{\center\arraybackslash}m{2cm}}
+
+
+
+%NOTE title Here
+\title{Homework 6 Real Analysis}
+\author{Hanyuan Zhu}
+
+
+
+%%%%%%%%%%%%% NOTE Begin of Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Problem 2.19}
+\paragraph{(a)}
+A and B are closed, that is the set of their limit points, $A'$ and $B'$ , are in A and B, respectively,
+$ A' \subset A, B' \subset B$.
+
+Then $ \bar{A} = A \cup A' = A $ and $ \bar{B} = B \cup B' = B$.
+
+Since A and B are disjoint, $A \cap B = \emptyset $, then we have
+\begin{equation}
+  \begin{split}
+    \bar{A} \cap B = A \cap B = \emptyset \\
+    A \cap \bar{B} = A \cap B = \emptyset
+    \end{split}
+\end{equation}
+
+Therefore A and B are separated.
+
+\paragraph{(b)}
+A and B are open and disjoint, $ A \cap B = \emptyset$.
+To prove A and B are separated, that is to prove $ (\bar{A} \cap B)  \cup  (A \cap \bar{B}) = \emptyset$.
+
+We will simplify such statement below,
+\begin{equation}
+  \begin{split}
+    & (\bar{A} \cap B)  \cup  (A \cup \bar{B}) = \emptyset \\
+    \Leftrightarrow & (\bar{A} \cap B)^c  \cap  (A \cap \bar{B})^c = \emptyset^c = X \\
+    \Leftrightarrow & (\bar{A}^c \cup B^c)  \cap  (A^c \cup \bar{B}^c) = X \\
+    \Leftrightarrow & (\bar{A}^c \cap A^c) \cup (\bar{A}^c \cap \bar{B}^c) \cup (B^c \cap \bar{B}^c) \cup (B^c \cap A^c) = X \\
+    &\text{ because } \bar{A}^c \subset A^c \text{ and } \bar{B}^c \subset B^c \\
+    \Leftrightarrow & A^c \cup (\bar{A}^c \cap \bar{B}^c) \cup B^c \cup (B^c \cap A^c) = X \\
+    \Leftrightarrow & (A^c \cup B^c) \cup (\bar{A}^c \cap \bar{B}^c) \cup (B^c \cap A^c) = X \\
+    &\begin{split}
+      &\text{ because } \bar{A}^c \cap \bar{B}^c = (A \cup A')^c \cap (B \cup B')^c = (A^c \cap B^c) \cap (A'^c \cap B'^c)\\
+      & \text{ then } \bar{A}^c \cap \bar{B}^c \subset A^c \cap B^c\\
+    \end{split}\\
+    \Leftrightarrow & (A^c \cup B^c) \cup (A^c \cap B^c) = X \\
+    \Leftrightarrow & A^c \cup B^c = X \\
+    \Leftrightarrow & A \cap B = \emptyset \\
+  \end{split}
+\end{equation}
+
+According to above, if A and B are open sets  and we want to show A and B are separated, it is equivalent to show $A \cap B = \emptyset $.
+Since A and B are disjoint, which is $A \cap B = \emptyset $, thus A and B are separated.
+
+\paragraph{(c)}
+For some $ p \in X$ , $\delta >0$,
+$A(p) = \{ q\in X | d(p,q) < \delta \}$,
+$B(p) = \{ q\in X | d(p,q) > \delta \}$.
+
+Firstly, we show $A(p)$ and $B(p)$ are disjoint.
+$$ A(p) \cap B(p) = \{ q \in X | d(p,q)< \delta \quad \& \quad d(p,q) >\delta \} = \emptyset $$
+Thus  $A(p)$ and $B(p)$ are disjoint.
+
+Secondly, we shall show $A(p)$ and $B(p)$ are open.
+For every point $ q \in A(p) $,  there is $\epsilon = \frac{\delta - d(p,q)}{2}$, any $x \in N_{\epsilon}(q)$, $ x \in  A(p)$.
+Therefore $A(p)$ is open.
+In the same manner, let $\epsilon = \frac{d(p,q) - \delta }{2}$, we can see $B(p)$ is open.
+
+Since $A(p)$ and $B(p)$ are disjoint and open, by part (b), we know $A(p)$ and $B(p)$ are separated.
+
+\paragraph{(d.)}
+First of all, we will show if metric space X  is connected, it is perfect.
+
+Lets assume if X is not perfect, there is a point $x \in X$ not a limit point of X,
+Therefore,  we can construct two disjoint subset A and B, such that $ A \cup B = X$, $ \bar{A} = A = \{x\}$ and $ \bar{B} = B = A^c$ .
+$$ \bar{A} \cap B = \emptyset $$
+$$ A \cap \bar{B} = \emptyset $$
+Above means if X is nonperfect, X is not connected. It means \textbf{if metric space X  is connected, it is perfect.}
+
+By Thm 2.43, we know a nonempty perfect set is uncountable. Therefore the connnected metric space X is uncountable.
+
+\subsection*{Problem 2.20}
+Set E is connected
+\paragraph{ The closure $ \bar{E} $ is connected}
+To show it , We assume there exist two disjointed subset of the closure of E, $A \cup B = \bar{E}$  , s.t. A and B are separated.
+
+\begin{enumerate}
+  \item If $A \cap E \neq \emptyset$ and $B \cap E \neq \emptyset$, Then A and B are not separated by connectedness of E.
+  \item Therefore, $ A \subset E' \backslash E $ or $B \subset E'\backslash  E $. WLOG, we assume $ A \subset E' \backslash E $, Then $ \bar{B} = \bar{E}$, and $ A \cap \bar{B} = A \neq \emptyset$. So any A and B are connected
+\end{enumerate}
+
+\paragraph{ The interior $E^i$ could be separable}
+Counterexample: A and B are two closed sets share some limit points in set E, and points in E are neither an interior point of A nor of B.
+Such as two rectangles share a borderline.
+
+\subsection*{Problem 2.21}
+
+\paragraph{a.}
+Firstly, we will show $ A_0 $ and $ B_0 $ are disjoint. Be definition, if $ x \in A_0 $ then $ p(x) \in A$; since A and B are seperated, $ p(x) \not\in B$ , that is $ x \not\in B_0$. And it is the same for any $x \in B_0$.
+
+Secondly, we shall show no limit point $ x \in A'_0 $ of $ A_0$ is in $B_0$.
+We assume if there exist $ x \in A'_0 $, $ x \in B_0 $. For any $\epsilon > 0$, you can find $ d(x,s) = \vert x - s \vert< \epsilon $ $ s \in A_0$.
+By definition, for some $ a \in A,\text{ and }b \in B $ $ p(s) = (1-s) a + sb = a + (b-a)s \in A $ and $p(x) = (1-x)a+xb \in B$.
+$d(p(x),p(s)) = \Vert p(x)-p(s) \Vert = \Vert (b-a)(x-s) \Vert = \vert x-s \vert \Vert b-a \Vert < \Vert b-a \Vert \epsilon $.
+That is for any $\Vert b-a \Vert \epsilon > 0$ $ p(x)\in B $, there exist $p(s) \in A$ s.t. $ d(p(x),p(s)) < \Vert b-a \Vert \epsilon $, Therefore A has limit point in B, which contradict to that A and B are separated.
+By the same means we can should no limit point of $B_0$ can be found in $A_0$.
+Therefore $ A_0 $ and $ B_0 $ are separated.
+
+\paragraph{b.} We have showed in part a. that $ A_0 $ and $ B_0 $ are separated, $ t = 0 \in A_0 $ and $ t = 1 \in B_0$, therefore  there exist $t_0 \in (0,1)$ s.t. $ t_0  \not\in A_0 \cup B_0$.
+By definition, $p(t_0) \not\in A \cup B$.
+
+\paragraph{c.} Because for any convex subset E of $R_k$, any $a \in E$ and $b \in E$, we have $p(t) \in E$, where $p(t) = (1-t)a +tb$ for all $t \in (0,1)$.
+We have proved in part b. , by such condition, any nonempty subsets of E are connnected. Therefore E is connected.
+
+\subsection*{Problem 2.24}
+To show metric space X is separable, that is to show there is a countable dense subset E of X.
+
+Before to construct such subset E, we will should X  has a finite base is bounded.
+Firstly, we assume $\{ x_1, x_2 ... x_i, ... \}$ is an infinity sequence in X, and $d(x_i, x_{i+1} \leq \delta)$.
+Then contradiction arises here, because such a infinity subset has no limit point, $N_{\frac{\delta}{2}} (x_i) = \{x_i\}$
+Therefore the subset $\{ x_1, x_2 ... x_i, ... x_n \}$  must be finite for some n, and $ X = \cup^{n}_i N_{\delta} (x_i)$.
+
+Thus, for some $\delta_0 > 0$, we can have a finite subset $S_{\delta_0}$, and $ |S_{\delta_0}| = N_{\delta_0} $.
+By the same manner, We can construct a countable subset $ E = \cup_{n=1}^{\infty} S_{\frac{\delta_0}{n}}$, because $S_{\frac{\delta_0}{n}}$ is finite and $\{ 1, 2,3...\}$ is countable.
+
+To show such E is dense in X. We know every subset, $S_{\frac{\delta_0}{n}}$, can make a finite cover $ \{ N_{\frac{\delta_0}{n}}(x_i) | x_i \in S_{\frac{\delta_0}{n}} \} $ of X by radius $\frac{\delta_0}{n}$.
+Let $x\in X$, for arbitary $\sigma >0$ , you can have $ x \in N_{\frac{\delta_0}{n}} (x_i) $ with $ n > \frac{\delta_0}{\sigma}$, and $x_i \in  S_{\frac{\delta_0}{n}} \subset E$.
+So E is dense in X.
+
+Therefore, because there is a dense countable subset E in metric space X. X is separable.
+
+
+\subsection*{Problem 2.25}
+K is compact metric with a finite base. $x \in K$, $B_{\frac{1}{i}}(x)$ is the neighborhood of x with radii $\frac{1}{i}$ for some $i \in \mathbbm{N^+}$.
+Thus for every  n, K has a open cover $K = \cup_{x \in  K} B_{\frac{1}{i}}(x) $, and a corresponding finite subcover is $K = \cup_{x \in E_{i}} B_{\frac{1}{i}}(x) $,
+where $E_i \subset K$ is a finite subset with cardinality $|E_i| = N_i$.
+
+Then we can construct the countable base of metric space K by $$B = \cup_{i \in \mathbbm{N^+}} \cup_{x \in E_{i}} B_{\frac{1}{i}}(x)$$
+We denote the center point of the jth ball corresponding to the finite subset $E_i$ as $ x^i_j$.
+The set $$ X = \{x^i_j | i \in \mathbbm{N} \text{ and } j \in {1, 2, ... N_i}\}$$ is countable, because for each i, $N_i$ is finite and $\mathbbm{N}$ is countable.
+
+To show X is dense in K, for any $k \in K$ with arbitary $ \delta > 0$, you have $i > \frac{1}{\delta}$ s.t. $ k \in B_{\frac{1}{i}}(x)^i_j$ with some $j < N_i$.
+
+Therefore X is a countable dense subset of K, which means K is separable.
+
+\subsection*{Problem 2.29}
+First, we want to prove for every open set $E \subset R^1$, there exists a union of disjoint segments s.t. $ \cup_i S_i = E$.
+
+For any $ x \in E $, we denote $ \{S^{(x)}_{\alpha}\} $ as a collection of intervals , $S^{(x)}_{\alpha} \subset E$, that contains $x$, and $S^{(x)} = \cup_{\alpha} S^{(x)}_{\alpha}$.
+Such $S^{x}$ is the maximum segments contains $x$, which means if $ y \in S^{x}$, $S^{x} = S^{y}$ and if $ y \not\in S^{x}$, $S^{x} \cap S^{x} = \emptyset$ that is disjointed. For all $x \in E$, we will have a collection of distinct $T = \{S^{(x)}\} $.
+$ E = \cup_{T} S^{(x)}$
+
+Secondly, we will show such T is a countable collection. Since rational number is dense in $R^1$,  any $ S^{(x)} \subset E$ contains rational numbers. Since every disjoint(or distinct) $S^{(x)}$ contains distinct rational numbers.
+If T is a uncountable collection, $\{S^{(x)}_{\alpha}\} $, it means there are uncountably many distinct rational numbers in E, which is a contradiction to the countability of rational number.
+Therefore open set E is a union of at most countable collection of disjoint segments.
+
+\subsection*{Problem 3.1}
+\paragraph{a.}
+Since $\{ s_n \}$ converges, it implies, for every $ \epsilon >0$, there exists N s.t. $|s_n - s_m| < \epsilon$ for any $m>N$ and $n >N$.
+$ ||s_n|- |s_m|| < |s_n - s_m| < \epsilon $ for any $m>N$ and $n >N$. Thus $ \{ |s_n| \}$ converges.
+
+\paragraph{b.} When $s_n = (-1)^n$ ,  $ \{ |s_n| \}$ converge 1, but $\{ s_n \}$  doesn't converge.
+
+\subsection*{Problem 3.2}
+
+\begin{equation}
+  \begin{split}
+    \lim_{n \rightarrow \infty}  \sqrt{n^2 + n} - n & = \lim_{n \rightarrow \infty} \frac{(\sqrt{n^2 + n} - n)(\sqrt{n^2 + n} + n)}{\sqrt{n^2 + n} + n} \\
+    & = \lim_{n \rightarrow \infty} \frac{n^2 + n - n^2}{\sqrt{n^2 + n} + n} \\
+    & = \lim_{n \rightarrow \infty} \frac{ n }{\sqrt{n^2 + n} + n} \\
+    & = \lim_{n \rightarrow \infty} \frac{ 1 }{\sqrt{1 + \frac{1}{n}} + 1} \\
+    & = \frac{1}{2}
+  \end{split}
+\end{equation}
+
+\subsection*{Problem 3.3}
+\paragraph{ Firstly, we show $ \{s_n\}$ is bounded. }
+
+Since $0 < s_1 = \sqrt{2} < 2$, we assume $ 0< s_n < 2$. $$ 0 < s_{n+1} = \sqrt{2 + \sqrt{s_n}} < \sqrt{2 + \sqrt{2}} < \sqrt{2 + 2} = 2 $$
+Therefore $ \{s_n\}$ is bounded by 0 and 2.
+
+\paragraph{ Secondly, we show $ \{s_n\}$ is monotonic.}
+
+\begin{equation}
+  s_2 =  \sqrt{2 + \sqrt{2}} > \sqrt{2} = s_1
+\end{equation}
+
+Assmue $s_n > s_{n-1}$.
+
+\begin{equation}
+  s_n+1 =  \sqrt{2 + \sqrt{s_n}} > \sqrt{2 + \sqrt{s_{n-1}}} = s_n
+\end{equation}
+
+Therefore $ \{s_n\}$ is monotonically increase.
+
+By theorem 3.14, $ \{s_n\}$ converges.
+
+\end{document}

@@ -1,0 +1,214 @@
+\documentclass{article}
+
+%change the margin of the paper
+%\usepackage[legalpaper, margin=0.1in]{geometry}
+%using the \substack
+\usepackage{amsmath}
+% \mathbbm{}
+\usepackage{bbm}
+
+% hyperlink Here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% this is the package for block comment \begin{comment} and \end{comment}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+% For multiple rows in tabular environment.
+\usepackage{multirow}
+% use this package to strikeout the word /st{}
+%the color package is for the \textcolor{red} to highlight the text
+\usepackage{color,soul}
+% to define newcolumntype and \arraybackslash
+\usepackage{array}
+% hyperref is to call /url. hyphen packege to avoid that the url is too long
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%Todo list, \newlist \setlist...
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% for image inserting
+\usepackage{graphicx}
+\graphicspath{./Desktop/Homework/123/6/}
+\usepackage{subfig}
+
+% \iff \leqlsant
+\usepackage{amssymb}
+
+
+
+% Code block begin(lstlisting) and end(lstlisting)
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+%NOTE: Change the "language" parameter here
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Macros
+%%%%%%%%%%%% Text Color %%%%%%%%%%%%%%%
+\definecolor{mypink1}{RGB}{219, 48, 233}
+\definecolor{myred1}{RGB}{231, 76, 60}
+\definecolor{myred2}{RGB}{203, 67, 53}
+\definecolor{myblue1}{RGB}{52, 152, 219}
+\definecolor{mygray}{gray}{0.6}
+
+%% Table Style
+\newcolumntype{C}{>{\center\arraybackslash}m{.70\columnwidth}}
+\newcolumntype{Y}{>{\center\arraybackslash}m{2cm}}
+
+
+
+%NOTE title Here
+\title{Realy Analysis Homework 5}
+\author{Hanyuan Zhu}
+\date{Oct 26 2018}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Question 12}
+\paragraph{proof}
+To show $K = \{ 0 \} \cup \{ \frac{1}{n} | n \in \mathbb{Z}^{+} \} $ is compact, that is to show any open cover $\cup_{\alpha} G_{\alpha} $ of $ K $ has a finite subcover $ \cup_{i = 0}^{s} G_{\alpha_{i}} $, for some $ s \in \mathbb{N} $.
+
+Let $G_{\alpha_{0}}$ contains 0, then there exist some $\epsilon > 0$, such that $N_{\epsilon}(0) \in G_{\alpha_{0}}$. we let $s \leq \frac{1}{\epsilon}$, such that, for any $n > s$, $n >\frac{1}{\epsilon}$.
+Therefore, because  $ \epsilon > \frac{1}{n}$ if $n>s$, $\frac{1}{n} \in N_{\epsilon}(0)$, that is $G_{\alpha_{0}}$ covers $\{ \frac{1}{n} | n > s \}$. And let $G_{\alpha_{i}}$ contains $1/i$, and $i = 1,2,..., s$.
+Then $ \cup_{i = 0}^{s} G_{\alpha_{i}}$ is an open finite subcover of K. Therefore K is compact.
+
+\subsection*{Question 13}
+To construct such set, we can utilize the compact set $K = \{ 0 \} \cup \{ \frac{1}{n} | n \in \mathbb{Z}^{+} \} $ in Question 12.
+
+K is a countable set. We can construct a similar set whose limit point is the element of K, that is 1/n. That is, $\{ \frac{1}{n} \} \cup \{ \frac{1}{n} + \frac{1}{m} | m \in \mathbb{Z}^{+}\}$ has only limit point $\frac{1}{n}$, so it is closed and bounded within $\frac{1}{n}$ to $1+\frac{1}{n}$.
+
+Therefore $\{ 0 \} \cup \{ \frac{1}{n} | n \in \mathbb{Z}^{+} \} \cup \{ \frac{1}{n} + \frac{1}{m} | n \in \mathbb{Z}^{+}, m \in \mathbb{Z}^{+}\}$ is closed and bounded, that is compact. And the set of limit point is K, which is countable.
+
+\subsection*{Question 14}
+$G_{\alpha_{i}}= ( \frac{1}{i}, 1-\frac{1}{i} )$, where $ i = 3, 4, ... $ . Such $\cup_{\alpha}G_{\alpha}$ is a open cover of $(0,1)$ without a finite subcover.
+In order to cover $(0,1)$, i has to go up to $\infty$.
+
+\subsection*{Question 15}
+These falses can be easily found by constructing a "closed but unbounded" set or a "bounded but open" set.
+
+First of all, we make "closed but unbounded" subsets $CU_{i} = [i, \infty) \subset \mathbb{R}^{+} \cup \{ 0 \}, i \in \mathbb{N}$ .
+For any choices of set $\{ i\}$, $j = max \{ i\}$, $\cap_i CU_{i} = CU_{j} \neq \emptyset$. However, as i goes up to infinity, the lower bound becomes infinity and there is no element larger than infinity. $\cap_{i}^{\infty} CU_{i} = \emptyset$.
+
+Secondly, we make bounded open set $BO_{i}=(0,\frac{1}{i}) \subset (0,1)$, where $i \in \mathbb{Z}^{+}$ .
+Intersection of any finite subsets is the smallest subset among those. However the as i go to infinity, $\frac{1}{n}$ approach the limit point 0.
+Therefore $\cap_{i}^{\infty} BO_{i} = \emptyset$ .
+
+By the same manner above, we can see that \textbf{corollary} fails if we replacing the "compact" by "closed" or "bounded", since $CU_{i} \supset CU_{i+1}$ and $BO{i} \supset BO_{i+1}$.
+
+\subsection*{Question 16}
+\paragraph{To show E is closed and bounded in Q, but it is not compact.}
+Frist of all, we want to show E is closed, that is to show the complement set $Q/E$ is open.
+
+Any $x \in Q/E$, that is $x \in Q$ and such x satisfies $x^2 \leq 2$ or $ x^2 \geq 3$. Because $x \in Q$, the complement set is eqivalent to $\{ x \in Q | x^2 < 2 \quad or \quad x^2 > 3 \}$.
+
+Let show the set $ Q_{2} = \{ x \in Q | x^2 < 2  \}$ is open first. for any $x \in Q_{2} $, we can always have such $\epsilon = min(\frac{\sqrt{2}-x}{2},\frac{\sqrt{2}+x}{2})$. Let $y \in N_{\epsilon}(x)$, then $y = x + d$, where $ |d| = d|x-y| < \epsilon$.
+\begin{equation}
+  \begin{split}
+    y^2 &= (x+d)^2 \leq (|x| + d|x-y|^2)\\
+    &< (|x| + \epsilon)^2 = (|x| + \frac{\sqrt{2}-|x|}{2})^2 = (\frac{\sqrt{2}+|x|}{2})^2\\
+    &< \frac{\sqrt{2}+\sqrt{2}}{2} = \sqrt{2}^2 = 2
+  \end{split}
+\end{equation}
+ , that is any such $ y \in N_{\epsilon}{x}$, $y \in Q_{2}$. $Q_{2}$ is open.
+
+Then, by the same method, we can show $Q_{3} = \{ x \in Q | x^2 >3 \}$ is open. For $\epsilon = max( \frac{x-\sqrt{3}}{2}, \frac{-x-\sqrt{3}}{2})$.
+For any $ y \in N_{\epsilon}(x)$, we have
+\begin{equation}
+  \begin{split}
+ y^2 &= (x + d)^2 = (x - (-d))^2 \\
+ &\geq ||x| - |-d||^2= ||x| - |d||^2 =  ||x| - d(x-y)|^2 \\
+ & > | |x| - \epsilon |^2 = | |x| - \frac{|x|-\sqrt{3}}{2}|^2 = (\frac{|x|+\sqrt{3}}{2})^2\\
+ & > (\frac{\sqrt{3}+\sqrt{3}}{2})^2 = 3
+\end{split}
+\end{equation}
+, that is any such $ y \in N_{\epsilon}{x}$, $y \in Q_{3}$. $Q_{3}$ is open.
+
+$Q/E = Q_{2} \cup Q_{3}$ is open. Then E is \textbf{closed} in Q.
+
+And E is \textbf{bounded} by $[-\sqrt{3},\sqrt{3}]$.
+
+Now we show E is not compact by constrcuting an open cover of E, $G_{\alpha_n} = \{ x | 2+\frac{1}{n}< x^2< 3,n\in \mathbb{N} \& n \geq 2\}$ .
+To cover entire E, that is any $ p \in \{ x \in Q | 2< x^2 < 3 \}, p \in G_{\alpha_n}$ for some n. Such n has go to infinity, that is there is no finite subcover of $\cup_{i}^{infty} G_{\alpha_i}$. E is \textbf{not compact}.
+
+\paragraph{To show E is open in Q}
+We can utilize the same method for showing the openness of complement of E. By choosing $\epsilon = min{  \frac{\sqrt{3}-x}{2},\frac{-x-\sqrt{3}}{2}, \frac{x-\sqrt{2}}{2}}$.
+For any $ y \in N_{\epsilon}(x) $, we can have $ 2 < y^2 <3 $. Therefore, E is open in Q.
+
+\subsection*{Question 22}
+
+First of all, we show $Q^k$ is dense in $R^k$. Let $r = R^{k} = (r_{i}|i = 1, 2, ... , k)$.
+By Theorem 1.20, "Q is dense in R", we know , for abitary $\epsilon$, $ \exists q_{i} \in (r_{i}, r_{i} + \epsilon )$ such that
+$ |q - r| = (\frac{ \sum_{i=1}^{k}(q_{i}-r_{i})^p}{k})^{\frac{1}{p}} < (\frac{\sum_{i=1}^{k} (\epsilon)^p}{k})^{\frac{1}{p}} = \epsilon  $
+There always exists a rational point $q \in Q^k$, $ q \in N_{\epsilon}(r)$ for all r and arbitary $\epsilon$.
+
+Therefore, the complement set of $Q^k$ in $R^k$ has empty interior, that is the closure of $Q^k$ in $R^k$ is $R^k$, or  $Q^k$ is \textbf{dense} in $R^k$.
+
+Then we want to show $Q^k$  is countable. It is easy to see $Q^2 \sim \cup_{\alpha} Q_{\alpha}$, where $\alpha \in Q$. We know Q is countable so  $Q^2$ is countable.
+We can construct $Q^{i+1}$ in same way, $Q^{i+1} \sim \cup_{\alpha} Q^{i}_{\alpha}$, where $\alpha \in Q$. By deduction method, we see any $Q^{i}$, $i = 1, 2, ... $, is countable.
+Therefore $Q^k$ is a \textbf{countable} set. $R^k$ is separable.
+
+\subsection*{Question 23}
+We construct a base of X by X's countable dense subset,$Q = \{ q_{i} | i \in \mathbb{N} \} $ and some rational distance $r$.
+\begin{equation}
+  V_{\alpha_i} = N_{r}(q_i)
+\end{equation}
+$ V_{\alpha_i} $ is the neighborhood of $q_i$ with some rational radius r.
+Now we are going to show $\{ V_{\alpha} \}$ is a base of X.
+Let G be any open subset of X. For every $x \in G \subset X$, because G is open, there exists $\epsilon > 0$ such that $N_{\epsilon}(x) \subset G$.
+Since Q is dense in X, we can find some $q_{k} \in N_{\frac{\epsilon}{10}}(x)$. In order to let $x \in N_{r}(q_i)$, $ r> d|q_i,x|  $,
+and in order to let $N_{r}(q_i) \subset N_{\epsilon}(x) $, $ r < \frac{\epsilon}{10} $. Thus $x \in N_{r}(q_i) \subset N_{\epsilon}(x) \subset G$.
+
+Therefore $\{ N_{r}(q_i) | i  \in \mathbb{N} \} $ is a countable base of X.
+
+\subsection*{Question 1}
+Since we know $ A_{i} \subset A_{i-1} $ and all $A_{i} \neq \emptyset $, then for any finite choices set of $\{ i\}$, $j = max\{ i\}$ , $\cap_{i} A_{i} = A_{j} \neq \emptyset$.
+
+By Theorem 2.36, because $A_{i}$s are compact sets and have the property showed above , $\cap_{i=1}^{\infty} A_{i} \neq \emptyset$ .
+
+\subsection*{Question 2}
+To prove it by contradiction, assume A, a uncountable subet set of $\mathbbm{R}$, has no condensation point,
+that is for every $x \in A$ , there exists such r that the neighborhood $N_{r}(x) \cap A $ is at most countable.
+Then $\{ N_{r}(x) | x \in A\}$ is an open cover of A. Here we use the hint that "every open cover of a subset of R has an at most countable subcover."
+$ A \subset \cup_i N_{r}(x_i)$ is at most countable union. Then $ A = A \cap (\cup_i N_{r}(x_i)) = \cup_i (A \cap N_{r}(x_i))$ is at most countable, because it is countably union of $N_{r}(x) \cap A $, at most countable sets.
+This contradicts to A is uncountable. Therefore A has at least one condensation point.
+
+
+\subsection{temo}
+
+
+We have showed in Question 23, that $\mathbb{R}$ has a countable base $\{ G_{q_i} | i  \in \mathbb{N} \} $.
+
+Because $A \subset \mathbbm{R}$ and A is uncountable, $ A = A \cap R = A \cap ( \cup_{i}^{\infty} G_{q_i}) = \cup_{i}^{\infty} (A \cap G_{q_i})$  is uncountable.
+Therefore there exist some i such that $A \cap G_{q_i}$ is uncountable, because coutably union of at most countable set is countable.
+Then for any $x \in A $ with any $r>0$, we can choose such a $G_{q_i}$ that $A \cap G_{q_i}$ is uncountable and $x \in G_{q_i} \subset N_{r}(x)$, $ N_{r}(x) \cap A $ is uncountable.
+
+\end{document}

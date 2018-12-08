@@ -1,0 +1,104 @@
+\documentclass{article}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+
+\begin{document}
+
+\section*{Question 5}
+\begin{enumerate}
+  \item The Principle Components are $T = XU$ where $X$ are the data set and
+  \begin{equation}
+  U = \bigg[ \begin{tabular}{c c}
+  -0.7930 &   0.6093 \\
+  0.6093  &  0.7930 \\
+\end{tabular}
+ \bigg]
+\end{equation}
+\item There is no dominant linear direction in the data, since the ratio of two eigenvalues of covariance matrix is about 1.
+  \end{enumerate}
+
+  \section*{Question 6}
+  \begin{enumerate}
+    \item The Principle Components are $T = XU$ where $X$ are the data set and
+    \begin{equation}
+    U = \bigg[ \begin{tabular}{c c}
+    -1.0000  &  0.0070 \\
+ 0.0070  &  1.0000 \\
+  \end{tabular}
+   \bigg]
+  \end{equation}
+  You can see clearly the data are stretched most along the first primary component direction.
+  \item The dominant direction is along $[0.0070,1.0000]$ with the primary eigenvalue of $0.9672$, which is much larger than the second eigenvalue $0.0630$.
+    \end{enumerate}
+
+\section*{Code for Questions}
+\begin{tabular}{c|c}
+
+\end{tabular}
+\begin{lstlisting}
+%% Sample ~1000 points uniformly from a ball
+
+X_Circle=2*rand(floor(1000*(4/pi)),2)-[1,1]; % Generate data uniformly at random
+X_Circle=X_Circle(sum(X_Circle.^2,2)<1,:); %Use rejection sampling to get points to live in ball
+
+%%First Principle component
+Cov_Circle = cov(X_Circle);
+[V_C,D_C] = eig(Cov_Circle);
+%%PCA
+PC_1 = X_Circle * V_C(:,1);
+PC_2 = X_Circle * V_C(:,2);
+length = zeros(size(PC_1,1),1);
+close all; % Display data
+%scatter(X_Circle(:,1),X_Circle(:,2));
+scatter(length,PC_1);
+axis equal
+title('Data Generated Uniformly From a Ball of Radius 1','Interpreter','Latex');
+
+%% Sample ~1000 points uniformly from an ellipse with major axis lengths 2,.5.
+
+
+X_Ellipse=4*rand(floor(1000*(16/pi)),2)-[2,2];
+X_Ellipse=X_Ellipse(sum([4,.25].*X_Ellipse.^2,2)<1,:);
+%%First Principle component
+Cov_Ellipse = cov(X_Ellipse);
+[V_E,D_E] = eig(Cov_Ellipse);
+%%Principle Components
+PC_E1 = X_Ellipse * V_E(:,1);
+PC_E2 = X_Ellipse * V_E(:,2);
+length_E = zeros(size(PC_E1,1),1);
+
+close all;
+scatter(X_Ellipse(:,1),X_Ellipse(:,2));
+
+
+axis equal
+title('Data Generated Uniformly From Interior of the Ellipse $4x^{2}+\frac{y^{2}}{4}=1$','Interpreter','latex');
+         \end{lstlisting}
+
+
+
+\end{document}

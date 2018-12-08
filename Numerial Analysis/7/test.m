@@ -1,0 +1,1 @@
+a^3/8*(4+3*(cos(pi/4)-sin(pi/4))-cos(pi/4)*sin(pi/4)(x-cos(pi/4)) +a^3/8 * (cos(pi/4)+1)^3

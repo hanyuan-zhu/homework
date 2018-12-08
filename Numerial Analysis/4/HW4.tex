@@ -1,0 +1,212 @@
+\documentclass{article}
+
+%change the margin of the paper
+\usepackage[legalpaper, margin=1 in]{geometry}
+
+% hyperlink Here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% this is the package for block comment \begin{comment} and \end{comment}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+% For multiple rows in tabular environment.
+\usepackage{multirow}
+% use this package to strikeout the word /st{}
+%the color package is for the \textcolor{red} to highlight the text
+\usepackage{color,soul}
+% to define newcolumntype and \arraybackslash
+\usepackage{array}
+% hyperref is to call /url. hyphen packege to avoid that the url is too long
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%Todo list, \newlist \setlist...
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% Code block begin(lstlisting) and end(lstlisting)
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Macros
+%%%%%%%%%%%% Text Color %%%%%%%%%%%%%%%
+\definecolor{mypink1}{RGB}{219, 48, 233}
+\definecolor{myred1}{RGB}{231, 76, 60}
+\definecolor{myred2}{RGB}{203, 67, 53}
+\definecolor{myblue1}{RGB}{52, 152, 219}
+\definecolor{mygray}{gray}{0.6}
+
+%%%%%%%%%%%%%%%% Tags  %%%%%%%%%%%%%%%%
+\newcommand{\pylb}{\textcolor{blue}{Python \quad}}
+\newcommand{\llb}{\textcolor{green}{Latex \quad}}
+\newcommand{\qlb}{\textcolor{red}{Question \quad}}
+\newcommand{\mlb}{\textcolor{mypink1}{Math \quad}}
+\newcommand{\main}{\textcolor{myred2}{MAIN \quad}}
+
+%%Section name
+\newcommand{\todo}{\textcolor{myred1}{TODO}}
+\newcommand{\notes}{\textcolor{myblue1}{NOTES}}
+
+%% Table Style
+\newcolumntype{C}{>{\center\arraybackslash}m{.70\columnwidth}}
+\newcolumntype{Y}{>{\center\arraybackslash}m{2cm}}
+
+% Title setting
+\title{Homework 4}
+\author{Hanyuan Zhu}
+\date{October 2, 2018}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%BEGINNING OF DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\section{Bisection Method}
+
+The smallest positive root is \textbf{$0.6662394324925154$}
+
+\subsubsection*{The bisection algorithm is below by Python:}
+\begin{lstlisting}
+import numpy as np
+import math
+#iteration counter: to count how many steps to reach the threshold value
+i=0
+
+#Define the target funciton
+def f(x):
+    return math.tan(x)-math.cos(x)
+
+def randompostive(x):
+    return np.multiply(np.random.random(),x)
+
+## NOTE: Inital generator, range:[0,1), half open interval, choosing a number uniformally randomly
+a = randompostive(1);
+b = randompostive(1);
+
+## Here guarantees f(b)<= 0 <= f(a)
+while f(a)<0:
+    b = a;
+    a = randompostive(1);
+
+while f(b)>0:
+    b = randompostive(1);
+
+#to print the initial range
+print abs(a-b)
+
+### Setting the threshold epsilon
+epsilon_ = math.pow(10,-15)
+
+### Begin the bisection iterations. # NOTE:  Return r as root.
+if f(a)*f(b) != 0:
+    while abs(a-b) > epsilon_ :
+        c = (a+b)/2
+        if f(c) > 0:
+            a = c;
+        elif f(c) < 0:
+            b = c;
+        else:
+            a = b;
+        i = i+1;
+    r = (a+b)/2;
+elif  f(a) == 0:
+    r = a;
+else:
+    r = b;
+
+# print the root = 0.6662394324925154
+print r
+
+# print the number of iteratoins to get the root 50
+print i
+
+\end{lstlisting}
+
+
+\section*{Newton's Method}
+
+The smallest positive root is \textbf{$0.6662394324925153$}
+
+
+The basin of attraction of the smallest positive root is the largest continuous interval of $f'(x)$ which contains the root.
+\begin{equation}
+  f'(x) = 1 + \tan^2 x + \sin x
+\end{equation}
+
+We know $\sin x$ is continuous on $ \mathbb{R} $, and $\tan^2 x$ is continuous on $ [ -4/\pi , 4/\pi] $, therefore the basin of attraction is \hl{$ [ -4/\pi , 4/\pi] $}
+
+\subsubsection*{The Newton's algorithm is below by Python:}
+\begin{lstlisting}
+import numpy as np
+import math
+#iteration counter: to count how many steps to reach the threshold value
+i=0
+
+def randompostive(x):
+    return np.multiply(np.random.random(),x)
+
+# here iter(x) is x - f(x)/f'(x)
+def iter(x):
+    f_x = math.tan(x)-math.cos(x);
+    df_x = 1+math.pow(math.tan(x),2)+math.sin(x);
+    return x - f_x/df_x
+
+## NOTE: Inital generator, range:[0,5). Since we get smallest root from bisection around 1.57.
+x_1 = 0
+
+x_2 = randompostive(2);
+
+### Setting the threshold epsilon
+epsilon_ = math.pow(10,-15)
+
+while abs(x_1-x_2) > epsilon_:
+    x_1 = x_2;
+    x_2 = iter(x_1);
+    i = i+1;
+
+# x_2= 0.6662394324925153
+print x_2
+
+# i = 9
+print i
+\end{lstlisting}
+\end{document}

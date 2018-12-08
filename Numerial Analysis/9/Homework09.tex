@@ -1,0 +1,239 @@
+\documentclass{article}
+
+%change the margin of the paper
+%\usepackage[legalpaper, margin=0.1in]{geometry}
+%using the \substack
+\usepackage{amsmath}
+% \mathbbm{}
+\usepackage{bbm}
+
+% NOTE \pdv  partial differential equation
+\usepackage{physics}
+
+% hyperlink Here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% \cancelto{0}{A} to cross the A to 0
+\usepackage{cancel}
+
+
+% this is the package for block comment \begin{comment} and \end{comment}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+% For multiple rows in tabular environment.
+\usepackage{multirow}
+% use this package to strikeout the word /st{}
+%the color package is for the \textcolor{red} to highlight the text
+\usepackage{color,soul}
+% to define newcolumntype and \arraybackslash
+\usepackage{array}
+% hyperref is to call /url. hyphen packege to avoid that the url is too long
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%Todo list, \newlist \setlist...
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% for image inserting
+\usepackage{graphicx}
+\graphicspath{./Desktop/Homework/123/7/}
+\usepackage{subfig}
+
+% \iff \leqlsant
+\usepackage{amssymb}
+
+
+
+% Code block begin(lstlisting) and end(lstlisting)
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+%NOTE: Change the "language" parameter here
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Macros
+%%%%%%%%%%%% Text Color %%%%%%%%%%%%%%%
+\definecolor{mypink1}{RGB}{219, 48, 233}
+\definecolor{myred1}{RGB}{231, 76, 60}
+\definecolor{myred2}{RGB}{203, 67, 53}
+\definecolor{myblue1}{RGB}{52, 152, 219}
+\definecolor{mygray}{gray}{0.6}
+
+%% Table Style
+\newcolumntype{C}{>{\center\arraybackslash}m{.70\columnwidth}}
+\newcolumntype{Y}{>{\center\arraybackslash}m{2cm}}
+
+
+
+%NOTE title Here
+\title{Homework 9 Numerical Analysis}
+\author{Hanyuan Zhu}
+\date{}
+
+%%%%%%%%%%%%% NOTE Begin of Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+
+Now we are trying to use the way for Trapezoidal Rule error to derive the error function of Simpson’s Rule.
+$x_{n-1} + h = x_n$
+
+\begin{equation}
+  \begin{split}
+    E^{S}(f) &= \int_{x_0}^{x_n} f(x) dx - \sum^{\frac{n-2}{2}}_{i=0} \int_{x_{2i}}^{x_{2i+2}} P_2 (x) dx = \sum^{\frac{n-2}{2}}_{i=0} \int_{x_{2i}}^{x_{2i+2}} f(x)-P_2 (x) dx \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \int_{x_{2i}}^{x_{2i+2}} \Psi_2 (x) \frac{f^{(3)}(c_x)}{3!} dx \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \frac{f^{(3)}(c_x)}{3!} \int_{x_{2i}}^{x_{2i+2}} \Psi_2 (x)  dx \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \frac{f^{(3)}(c_x)}{3!} \int_{x_{2i}}^{x_{2i+2}} (x - x_{2i})(x - x_{2i+1})(x - x_{2i+2}) dx \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \frac{f^{(3)}(c_x)}{3!} \int_{x_{2i}}^{x_{2i+2}} (x - x_{2i})(x - x_{2i} - h)(x - x_{2i} - 2h) d(x-x_i) \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \frac{f^{(3)}(c_x)}{3!} \int_{0}^{2h} x (x - h)(x - 2h) dx \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \frac{f^{(3)}(c_x)}{3!} \int_{0}^{2h} x^3 - 3hx^2 +2h^2x \quad dx \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \frac{f^{(3)}(c_x)}{3!} (\frac{x^4}{4} - hx^3 +h^2x^2) \Big\vert^{2h}_0 \\
+    &=  \sum^{\frac{n-2}{2}}_{i=0} \frac{f^{(3)}(c_x)}{3!} \cancelto{0}{( 4h^4 - 8h^4 + 4 h^4)} = 0\\
+  \end{split}
+\end{equation}
+
+That is the error will vanish in this manner.
+
+
+\section*{Question 2}
+\subsection*{2a. Taylor expansion at $x_1$}
+\begin{equation}
+  \begin{split}
+    f(x) = f(x_1) + \frac{f'(x_1)}{1!}(x-x_1) + \frac{f''(x_1)}{2!} (x-x_1)^2 + \frac{f'''(x_1)}{3!} (x-x_1)^3 + \frac{f^{(4)} (c)}{4!} (x-x_1)^4
+  \end{split}
+\end{equation}
+
+\subsection*{2b. Integrate Taylor expansiion}
+\begin{equation}
+  \begin{split}
+      \int^{x_2}_{x_0} f(x) dx = \int^{x_2}_{x_0} & (f(x_1) + \frac{f'(x_1)}{1!}(x-x_1) + \frac{f''(x_1)}{2!} (x-x_1)^2 \\
+      &+ \frac{f'''(x_1)}{3!} (x-x_1)^3 + \frac{f^{(4)} (c)}{4!} (x-x_1)^4) \quad dx\\
+      = \int^{x_2}_{x_0} & (f(x_1) + \frac{f'(x_1)}{1!}(x-x_1) + \frac{f''(x_1)}{2!} (x-x_1)^2 \\
+      &+ \frac{f'''(x_1)}{3!} (x-x_1)^3 + \frac{f^{(4)} (c)}{4!} (x-x_1)^4) \quad d(x-x_1)\\
+      = \int^{h}_{-h} & (f(x_1) + \frac{f'(x_1)}{1!} x + \frac{f''(x_1)}{2!} x^2 + \frac{f'''(x_1)}{3!} x^3 + \frac{f^{(4)} (c)}{4!} x^4)dx\\
+      &\text{ Odd functions will be cancelled out because of identical positive and negative area }\\
+      = \int^{h}_{-h} & (f(x_1) + \frac{f''(x_1)}{2!} x^2 +  \frac{f^{(4)} (c)}{4!} x^4)dx\\
+      =&  (f(x_1) x  + \frac{f''(x_1)}{3!} x^3 +  \frac{f^{(4)} (c)}{5!} x^5) \Big\vert^{h}_{-h}\\
+      =&  2 f(x_1) h    + \frac{f''(x_1)}{3} h^3 +  2 \frac{f^{(4)} (c)}{5!} h^5 \\
+  \end{split}
+\end{equation}
+
+
+
+\subsection*{2c.Function of  $f''(x_1)$ }
+By Taylor expansion at $x_1$, we have
+\begin{equation}
+  \begin{split}
+    f(x) = f(x_1) + \frac{f'(x_1)}{1!}(x-x_1) + \frac{f''(x_1)}{2!} (x-x_1)^2 + \frac{f'''(x_1)}{3!} (x-x_1)^3 + \frac{f^{(4)} (c)}{4!} (x-x_1)^4
+  \end{split}
+\end{equation}
+
+substitute $x_0$ and $x_2$ into equation above,
+\begin{equation}
+  \begin{split}
+    f(x_0) &= f(x_1) + \frac{f'(x_1)}{1!}(x_0-x_1) + \frac{f''(x_1)}{2!} (x_0-x_1)^2 + \frac{f'''(x_1)}{3!} (x_0-x_1)^3 + \frac{f^{(4)} (c)}{4!} (x_0-x_1)^4\\
+    &= f(x_1) - f'(x_1) h + \frac{f''(x_1)}{2} h^2  - \frac{f'''(x_1)}{3!} h^3 + \frac{f^{(4)} (c)}{4!} h^4\\
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    f(x_2) &= f(x_1) + \frac{f'(x_1)}{1!}(x_2-x_1) + \frac{f''(x_1)}{2!} (x_2-x_1)^2 + \frac{f'''(x_1)}{3!} (x_2-x_1)^3 + \frac{f^{(4)} (c)}{4!} (x_2-x_1)^4\\
+    &= f(x_1) + f'(x_1) h + \frac{f''(x_1)}{2} h^2  + \frac{f'''(x_1)}{3!} h^3 + \frac{f^{(4)} (c)}{4!} h^4\\
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    &f(x_0) + f(x_2) = 2 f(x_1) + f''(x_1) h^2  + \frac{f^{(4)} (c)}{12} h^4\\
+    \rightarrow &f''(x_1)  = \frac{1}{h^2}(f(x_0) - 2 f(x_1) + f(x_2)) - \frac{f^{(4)} (c)}{12} h^2  \\
+  \end{split}
+\end{equation}
+
+
+\subsection*{2d. Error of Simpson Rule }
+
+\begin{equation}
+  \begin{split}
+    &\text{Result from 2b. }\\
+    &\int^{x_2}_{x_0} f(x) dx  = 2 f(x_1) h + \frac{f''(x_1)}{3} h^3 + 2 \frac{f^{(4)} (c)}{5!} h^5 \\
+%    & \rightarrow  2 h f(x_1)  = \int^{x_2}_{x_0} f(x) dx - \frac{f''(x_1)}{3} h^3 - 2 \frac{f^{(4)} (c)}{5!} h^5\\
+    &\text{Formula of Simpson Rule }\\
+    &\int^{x_2}_{x_0} P_2(x) dx = \frac{h}{3}(f(x_0)+4f(x_1)+f(x_2)) %= \frac{h}{3}(f(x_0)-6 f(x_1)+f(x_2)) + 2 h f(x_1)\\
+  \end{split}
+\end{equation}
+
+Substitute $ f''(x_1)  = \frac{1}{h^2}(f(x_0) - 2 f(x_1) + f(x_2)) - \frac{f^{(4)} (c)}{12} h^2  $ into results from 2b.
+\begin{equation}
+  \begin{split}
+    &\int^{x_2}_{x_0} f(x) dx  = 2 f(x_1) h + \frac{\frac{1}{h^2}(f(x_0) - 2 f(x_1) + f(x_2)) - \frac{f^{(4)} (c)}{12} h^2  }{3} h^3 + 2 \frac{f^{(4)} (c)}{5!} h^5 \\
+    &\int^{x_2}_{x_0} f(x) dx  = 2 f(x_1) h + \frac{1}{3}(f(x_0) - 2 f(x_1) + f(x_2)) h - \frac{f^{(4)} (c)}{36} h^5   +  \frac{f^{(4)} (c)}{60} h^5 \\
+    &\int^{x_2}_{x_0} f(x) dx  = \frac{1}{3}(f(x_0) +4 f(x_1) + f(x_2)) h  - \frac{f^{(4)} (c)}{90} h^5 \\
+    &\int^{x_2}_{x_0} f(x) dx  = \int^{x_2}_{x_0} P_2(x) dx  - \frac{f^{(4)} (c)}{90} h^5 \\
+    \rightarrow &\int^{x_2}_{x_0} f(x)- P_2(x) dx = - \frac{f^{(4)} (c)}{90} h^5
+  \end{split}
+\end{equation}
+
+\subsection*{2e. Error function in Riemann Form and error estimation with large n}
+Let $x_i + h = x_{i+1}$ for $i = 0,1,2,..., n$ , and $ h = \frac{x_n-x_0}{n}$.
+When n is sufficiently large, on   $[x_{2i}, x_{2i+2}]$, $ f^{(4)}(x) \approx f^{(4)} (c_i) $. Then
+\begin{equation}
+  \begin{split}
+    f^{(3)} (2i+2)- f^{(3)} (2i) &=\int^{x_{2i+2}}_{x_{2i}}  f^{(4)} (x) dx \\
+    &\approx \int^{x_{2i+2}}_{x_{2i}}  f^{(4)} (c_i) dx\\
+    &=  f^{(4)} (c_i) \int^{x_{2i+2}}_{x_{2i}}  dx = 2 h f^{(4)} (c_i)    \\
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    \int^{x_n}_{x_0} f(x)- P_2(x) dx &= \sum_{i=0}^{\frac{n-2}{2}} \int^{x_{2i+2}}_{x_{2i}} f(x)- P_2(x) dx =   \frac{h^5}{4!}  \sum_{i=0}^{\frac{n-2}{2}} f^{(4)} (c_i)\\
+    &= - \frac{h^4}{180}  \sum_{i=0}^{\frac{n-2}{2}} 2hf^{(4)} (c_i)\\
+    &\approx - \frac{h^4}{180}  \sum_{i=0}^{\frac{n-2}{2}} (f^{(3)} (2i+2)- f^{(3)} (2i))\\
+    &= - \frac{h^4}{180}  (f^{(3)}(x_n)- f^{(3)}(x_0))\\
+  \end{split}
+\end{equation}
+
+\subsection*{2f.Show  Theorem 5.2.5}
+Using the result from 2e, by changing $a = x_0$ and $b = x_n$. For any function f on intervel $[a,b]$,
+we will get the asymptotic estimation of the error of Simpson Rule,
+\begin{equation}
+  \begin{split}
+    E^{S}(f)\approx  - \frac{h^4}{180}  (f^{(3)}(b)- f^{(3)}(a))\\
+  \end{split}
+\end{equation}
+
+
+
+\end{document}

@@ -1,0 +1,220 @@
+\documentclass{article}
+
+%change the margin of the paper
+%\usepackage[legalpaper, margin=0.1in]{geometry}
+%using the \substack
+\usepackage{amsmath}
+% \mathbbm{}
+\usepackage{bbm}
+
+% NOTE \pdv  partial differential equation
+\usepackage{physics}
+
+% hyperlink Here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% \cancelto{0}{A} to cross the A to 0
+\usepackage{cancel}
+
+
+% this is the package for block comment \begin{comment} and \end{comment}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+% For multiple rows in tabular environment.
+\usepackage{multirow}
+% use this package to strikeout the word /st{}
+%the color package is for the \textcolor{red} to highlight the text
+\usepackage{color,soul}
+% to define newcolumntype and \arraybackslash
+\usepackage{array}
+% hyperref is to call /url. hyphen packege to avoid that the url is too long
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%Todo list, \newlist \setlist...
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% for image inserting
+\usepackage{graphicx}
+\graphicspath{./Desktop/Homework/123/7/}
+\usepackage{subfig}
+
+% \iff \leqlsant
+\usepackage{amssymb}
+
+
+
+% Code block begin(lstlisting) and end(lstlisting)
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+%NOTE: Change the "language" parameter here
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Macros
+%%%%%%%%%%%% Text Color %%%%%%%%%%%%%%%
+\definecolor{mypink1}{RGB}{219, 48, 233}
+\definecolor{myred1}{RGB}{231, 76, 60}
+\definecolor{myred2}{RGB}{203, 67, 53}
+\definecolor{myblue1}{RGB}{52, 152, 219}
+\definecolor{mygray}{gray}{0.6}
+
+%% Table Style
+\newcolumntype{C}{>{\center\arraybackslash}m{.70\columnwidth}}
+\newcolumntype{Y}{>{\center\arraybackslash}m{2cm}}
+
+
+
+%NOTE title Here
+\title{Homework 8 Numerical Analysis}
+\author{Hanyuan Zhu}
+\date{}
+
+
+
+%%%%%%%%%%%%% NOTE Begin of Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\section*{Question 3.20}
+We want to show the Cauchy sequence $\{ p_n\}$ converges to p, by given its subsequence $\{ p_{n_k}\}$ converges to p.
+
+Since $\{ p_n \}$ is Cauchy sequence, for any $\delta >0$, there exist such N that $ n > N \& m > N $, then $ d(p_m,p_n) < \delta $.
+
+Also because subsequence $\{ p_{n_k}\}$ converges to p,  for any given $\delta $ above, there exist such $N'$ that $ k > N' \leq N $, then
+$ d(d_{n_k},p) < \delta $.
+
+We let $ \epsilon = 2 \delta$. Thus, For any $\epsilon >0$, you can construct such $N'$ as above that $ d(d_n,p) <  d(p_n,p_{N'}) + d(p_{N'},p) < \delta + \delta = \epsilon $.
+$\{p_n\}$ converges to  p.
+
+\section*{Question 3.21}
+
+First of all, we will show there is no distinct points in  $ \cap^{\infty}_1 E_n$ if  $ \cap^{\infty}_1 E_n \neq \emptyset $.
+
+If  $  p\in \cap^{\infty}_1 E_n$ and  $ q \in \cap^{\infty}_1 E_n$. Then $p \in \lim_{n \rightarrow \infty} E_n $ and $q \in \lim_{n \rightarrow \infty} E_n $.
+Then $ 0 \leq d(p,q) \leq \lim_{n \rightarrow \infty} diam E_n = 0 $, that is $p = q$.
+
+
+Secondly, we will show $ \cap^{\infty}_1 E_n$ has at least one element.
+
+$E_n \supset E_{n+1}$ and $\lim_{n \rightarrow \infty} diam E_n = 0 $ imply $ E_n $ is Cauchy sequence for all n.
+Because X is a complete space, that means $\{ p_m \} = E_n $ converges to p. Since $E_n$ is closed,  the limit point $p \in E_n$ for all n.
+Therefore there at least exists $ p \in \cap^{\infty}_1 E_n$.
+
+To sum up, $\cap^{\infty}_1 E_n$ consist exactly one point, which is the limit point of sequence $ E_n$.
+
+\section*{Question 3.22}
+
+In order to utilize the result from Problem 3.21, We want to construct a closed bounded shrinking sequence of sets, $\overline{E_n} \in G_n$
+
+Since $ \{G_n\}$ is dense and open in X, the complement set $F_n = G_{n}^{c}$ is closed and has no interier points (otherwise such a point won't be a limit point of $G_n$).
+Thus for any open set $U \subset X$, $U \not\subset F_n $ and $U \backslash F_n$ is a open set. %For any n, $ \cap_{i=1}^{n} (U \backslash F_n) =  U \backslash (\cup_{i=1}^{n} F_n)  $ is open.
+
+
+If $x \in U \backslash F_1$, there is a $N_{r_1}(x) \subset U \backslash F_1$. We Let $E_1 = N_{\frac{r_1}{2}}(x)\subset N_{r_1}(x) \subset U \backslash F_n $.
+We choose $r_n$ by letting $N_{r_n}(x) \subset E_{n-1} \cap U \backslash F_{n-1}$, and $E_n = N_{\frac{r_n}{2}}(x) $.
+Then $\overline{E_{n+1}} = \overline{N_{\frac{r_{n+1}}{2}}(x)} \subset N_{r_{n+1}}(x) \subset E_{n} \subset \overline{E_{n}} $
+
+Because of $ N_{r_{n+1}}(x) \subset E_n \subset N_{\frac{r_{n}}{2}}(x) $, then $r_{n+1} < \frac{r_n}{2} < \frac{1}{2^{n-1}} r_1$. Therefore, as $n \rightarrow \infty$, $ r_n \rightarrow 0 $ and $ \text{diam } \overline{E_n} \rightarrow 0 $.
+
+We know
+\begin{equation}
+  \begin{split}
+    \overline{E_n} &\subset N_{r_{n}}(x) \subset E_{n-1} \cap (U \backslash F_n) \\
+    &\subset  E_{n-2} \cap (U \backslash F_{n-1}) \cap (U \backslash F_n)\\
+    & \subset \cap_{i=1}^{n} (U \backslash F_i)  = U \backslash (\cup_{i=1}^{n} F_i)\\
+    & = U \backslash (\cup_{i=1}^{n} G_{i}^{c}) = U \backslash (\cap_{i=1}^{n} G_{i})^{c}\\
+    & = U \cap (\cap_{i=1}^{n} G_{i})
+  \end{split}
+\end{equation}
+
+Thus
+\begin{equation}
+  \begin{split}
+    \cap_{i=1}^{\infty} \overline{E_n} &\subset \cap_{i=1}^{\infty} (U \cap (\cap_{j=1}^{i} G_{j}))\\
+    & = U \cap (\cap_{i=1}^{\infty} G_{i})
+  \end{split}
+\end{equation}
+
+According to result from Problem 3.21, we know $\cap_{i=1}^{\infty} \overline{E_n} \neq \emptyset $, that is $ U \cap (\cap_{i=1}^{\infty} G_{i}) \neq \emptyset $, then $\cap_{i=1}^{\infty} G_{i} \neq \emptyset $.
+
+%If $x \in U \backslash F_n$, for any n,  there is a $N_{r_n}(x) \subset U \backslash (\cup_{i=1}^{n} F_n)$. We Let $E_n = N_{\frac{r_n}{2}}(x)\subset N_{r_n}(x) \subset U \backslash (\cup_{i=1}^{n} F_n) $.
+%Then $\overline{E_n} = \overline{N_{\frac{r_n}{2}}(x)} \subset N_{r_n}(x) \subset U \backslash (\cup_{i=1}^{n} F_n) $
+
+\section*{Question 3.23}
+By the hints,
+$$ d(p_n, q_n) \leq d(p_n, p_m) + d(p_m, q_m)+ d(q_n, q_m)$$
+
+$$ d(p_n, q_n) -  d(p_m, q_m) \leq d(p_n, p_m) + d(q_n, q_m)$$
+
+$$ \vert d(p_n, q_n) -  d(p_m, q_m) \vert \leq d(p_n, p_m) + d(q_n, q_m)$$
+
+Since $\{ p_n \} $ $\{ q_n \} $ are cauchy sequence, then for any $\frac{\epsilon}{2}> 0$, there exists $N_1$ and $N_2$ such that if $n > N_1 \text{ and } n>N_2$ $d(p_n, p_m) < \frac{\epsilon}{2}$, also
+if $n > N_2 \text{ and } n>N_2$ $d(q_n, q_m) < \frac{\epsilon}{2}$.
+
+Then we let $N = max(N_1, N_2)$, we have For any $\epsilon > 0$, if  $n > N \text{ and } n>N$, then  $ \vert d(p_n, q_n) -  d(p_m, q_m) \vert < \frac{\epsilon}{2}+ \frac{\epsilon}{2} = \epsilon $. So it is a Cauchy Sequenc.
+Because $d(p_n, q_n) \in R$, and R is a complete metric space, therefore the  sequence $\{d(p_n, q_n)\}$ converges on R.
+
+
+\section*{Question 3.24}
+\subsection*{3.24 a}
+1. $d(p_n, p_n)= \vert p_n - p_n \vert = 0$;\\
+2. $d(q_n, p_n)=  \vert q_n - p_n \vert =  \vert p_n - q_n \vert = d(q_n, p_n)$;\\
+3. By triangle inequality, let $\{ r_n \} $ be sequence in X, $d(p_n, r_n) \leq d(p_n, q_n) + d(q_n, r_n)$,
+then $\lim_{n\rightarrow \infty} d(p_n, q_n) = 0 $ and $\lim_{n\rightarrow \infty} d(q_n, r_n) = 0 $ implies $\lim_{n\rightarrow \infty} d(p_n, r_n) = 0 $.
+
+\subsection*{3.24 b}
+In question 3.24a, we have showed that for equivalent sequences, $ \lim_{n\rightarrow \infty} d(p_n, p'_n) = 0$
+
+$ \lim_{n\rightarrow \infty} d(p'_n, q'_n) \leq \lim_{n\rightarrow \infty} d(p_n, p'_n) + \lim_{n\rightarrow \infty} d(p_n, q_n) + \lim_{n\rightarrow \infty} d(q_n, q'_n) =  \lim_{n\rightarrow \infty} d(p_n, q_n)$
+
+Again, using the triangle inequality from the otherside, we will show $\lim_{n\rightarrow \infty} d(p'_n, q'_n) = \lim_{n\rightarrow \infty} d(p_n, q_n)$.
+
+$\Delta (P,Q) = \lim_{n\rightarrow \infty} d(p_n, q_n) = \lim_{n\rightarrow \infty} d(p'_n, q'_n)$. Therefore it is unchanged by replacing equivalent sequences.
+
+\section*{Question 1}
+\subsection*{1 a}
+
+$f(x) =  \frac{1}{2} (x + \frac{\alpha}{x})$, then let $\dv{f(x)}{x} = \frac{1}{2} (1 - \frac{\alpha}{x^2})= 0$.  we have postive solution at $ x = \sqrt{\alpha}$.
+Therefore $x_n> \sqrt{\alpha} $.
+
+\subsection*{1 b}
+Given $x_n > \sqrt{\alpha}$, we have
+\begin{equation}
+  \begin{split}
+    x_{n+1} - x_n &= \frac{1}{2} (x_n + \frac{\alpha}{x_n})- x_n\\
+    &= \frac{x_n^2 + \alpha - 2 x_n^2}{2 x_n}\\
+    &= \frac{\alpha - 2 x_n^2}{2 x_n} < 0
+  \end{split}
+\end{equation}
+Therefore the sequence is monotonically decreasing.
+
+
+
+\end{document}

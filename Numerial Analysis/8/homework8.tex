@@ -1,0 +1,531 @@
+\documentclass{article}
+
+%change the margin of the paper
+%\usepackage[legalpaper, margin=0.1in]{geometry}
+%using the \substack
+\usepackage{amsmath}
+% \mathbbm{}
+\usepackage{bbm}
+
+% NOTE \pdv  partial differential equation
+\usepackage{physics}
+
+% hyperlink Here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% \cancelto{0}{A} to cross the A to 0
+\usepackage{cancel}
+
+
+% this is the package for block comment \begin{comment} and \end{comment}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+% For multiple rows in tabular environment.
+\usepackage{multirow}
+% use this package to strikeout the word /st{}
+%the color package is for the \textcolor{red} to highlight the text
+\usepackage{color,soul}
+% to define newcolumntype and \arraybackslash
+\usepackage{array}
+% hyperref is to call /url. hyphen packege to avoid that the url is too long
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%Todo list, \newlist \setlist...
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% for image inserting
+\usepackage{graphicx}
+\graphicspath{./Desktop/Homework/123/7/}
+\usepackage{subfig}
+
+% \iff \leqlsant
+\usepackage{amssymb}
+
+
+
+% Code block begin(lstlisting) and end(lstlisting)
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+%NOTE: Change the "language" parameter here
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Macros
+%%%%%%%%%%%% Text Color %%%%%%%%%%%%%%%
+\definecolor{mypink1}{RGB}{219, 48, 233}
+\definecolor{myred1}{RGB}{231, 76, 60}
+\definecolor{myred2}{RGB}{203, 67, 53}
+\definecolor{myblue1}{RGB}{52, 152, 219}
+\definecolor{mygray}{gray}{0.6}
+
+%% Table Style
+\newcolumntype{C}{>{\center\arraybackslash}m{.70\columnwidth}}
+\newcolumntype{Y}{>{\center\arraybackslash}m{2cm}}
+
+
+
+%NOTE title Here
+\title{Homework 8 Numerical Analysis}
+\author{Hanyuan Zhu}
+\date{}
+
+
+
+%%%%%%%%%%%%% NOTE Begin of Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+
+\subsection*{ Question 1}
+
+We are given 0 to 4th degrees of Legendre polynomials from referrence.
+\begin{equation}
+  \begin{cases}
+    P_0(x) = 1 & (P_0(x), P_0(x)) = 2 \\
+    P_1(x) = x & (P_1(x), P_1(x)) = \frac{3}{2} \\
+    P_2(x) = \frac{1}{2}(3 x ^2 - 1) & (P_2(x), P_2(x)) = 0.4\\
+    P_3(x) = \frac{1}{2} (5 x^3 -3 x) & (P_3(x), P_3(x)) = 0.285714  \\
+    P_4(x) = \frac{1}{8} (35 x^4 -30 x^2 + 3)  & (P_4(x), P_4(x)) = \frac{2}{9} \\
+  \end{cases}
+\end{equation}
+
+
+\paragraph{3.7 (b)} $f(x) = log(1 + x^2) $
+\begin{equation}
+  \begin{split}
+    &\int_{-1}^{1} f(x) P_0(x) dx = \int_{-1}^{1} log(1 + x^2)dx  = -4 + \pi + log(4)  \\
+    &\int_{-1}^{1} f(x) P_1(x) dx = \int_{-1}^{1} log(1 + x^2) x dx = 0\\
+    &\int_{-1}^{1} f(x) P_2(x) dx = \int_{-1}^{1} log(1 + x^2) \frac{1}{2}(3 x ^2 - 1) dx = \frac{10}{3} - \pi \\
+    &\int_{-1}^{1} f(x) P_3(x) dx = \int_{-1}^{1} log(1 + x^2) \frac{1}{2} (5 x^3 -3 x) dx = 0\\
+    &\int_{-1}^{1} f(x) P_4(x) dx = \int_{-1}^{1} log(1 + x^2) \frac{1}{8} (35 x^4 -30 x^2 + 3) dx = \frac{5 \pi}{2} - \frac{118}{15} \\
+  \end{split}
+\end{equation}
+Non-Zero terms of least square approximation,
+\begin{equation}
+  \begin{split}
+    l(x) &= \frac{(f,P_0)}{(P_0,P_0)} + \frac{(f,P_2)}{(P_2,P_2)} P_2 (x) + \frac{(f,P_4)}{(P_4,P_4)} P_4 (x)\\
+    &= \frac{\pi + log(4) -4 }{2} + (\frac{25}{6} - \frac{5\pi}{4})(3 x ^2 - 1) + (\frac{45 \pi}{32} - \frac{177}{40}) (35 x^4 -30 x^2 + 3)\\
+    &= \frac{log(4)}{2} - \frac{2333}{120}+  \frac{191 \pi}{32} + \frac{1589}{16} x^2  - \frac{3381}{32}  x^4
+  \end{split}
+\end{equation}
+
+\paragraph{3.7 (c)} $f(x) = tan^{-1} x $
+\begin{equation}
+  \begin{split}
+    &\int_{-1}^{1} f(x) P_0(x) dx = \int_{-1}^{1} tan^{-1}x dx  = 0 \\
+    &\int_{-1}^{1} f(x) P_1(x) dx = \int_{-1}^{1} x tan^{-1}x  dx \approx 0.5708\\
+    &\int_{-1}^{1} f(x) P_2(x) dx = \int_{-1}^{1} tan^{-1}x \frac{1}{2}(3 x ^2 - 1) dx = 0\\
+    &\int_{-1}^{1} f(x) P_3(x) dx = \int_{-1}^{1} tan^{-1}x \frac{1}{2} (5 x^3 -3 x) dx = -0.0228612\\
+    &\int_{-1}^{1} f(x) P_4(x) dx = \int_{-1}^{1} tan^{-1}x \frac{1}{8} (35 x^4 -30 x^2 + 3) dx =0 \\
+  \end{split}
+\end{equation}
+
+Non-Zero terms of least square approximation,
+\begin{equation}
+  \begin{split}
+    l(x) &= \frac{(f,P_1)}{(P_1,P_1)} x + \frac{(f,P_3)}{(P_3,P_3)} P_3 (x)\\
+    &\approx 0.5708 \frac{2}{3} x - \frac{0.0228612}{0.285714} \frac{1}{2} (5 x^3 -3 x)\\
+    &= 0.500555x - 0.2000036 x^3
+  \end{split}
+\end{equation}
+
+\subsection*{ Question 2}
+\paragraph{a.}
+We will show the orthogonality, $(Q_i,Q_j)=0, i \neq j $ by induction.
+Given $Q_0 = M_0$,
+\begin{equation}
+  \begin{split}
+    (Q_0,Q_1) &= (Q_0, M_1 - \frac{(M_1, Q_0)}{(Q_0, Q_0)}Q_0)\\
+    &= (Q_0, M_1) - \frac{(M_1, Q_0)}{(Q_0, Q_0)}(M_0,Q_0)\\
+    &= (Q_0, M_1) - \frac{(M_1, Q_0)}{(Q_0, Q_0)}(Q_0,Q_0)\\
+    &= (Q_0, M_1) - (Q_0, M_1) =0
+  \end{split}
+\end{equation}
+
+We assume $(Q_n, Q_j) = 0$, for all $ j < n$,
+\begin{equation}
+  \begin{split}
+    (Q_n, Q_j) &= (M_n - \sum^{n-1}_{i=0} \frac{(M_n, Q_i)}{(Q_i, Q_i)}Q_i, Q_j)\\
+    &= (M_n, Q_j) - \sum^{n-1}_{\substack{i=0 \\ i \neq j}} \frac{(M_n, Q_i)}{(Q_i, Q_i)}(Q_i, Q_j) - \frac{(M_n, Q_j)}{(Q_j, Q_j)}(Q_j, Q_j)\\
+    &= - \sum^{n-1}_{\substack{i=0 \\ i \neq j}} \frac{(M_n, Q_i)}{(Q_i, Q_i)}(Q_i, Q_j) = 0
+  \end{split}
+\end{equation}
+That is $ j < n, (Q_n, Q_j) = 0 \Leftrightarrow \sum^{n-1}_{\substack{i=0 \\ i \neq j}} \frac{(M_n, Q_i)}{(Q_i, Q_i)}(Q_i, Q_j) = 0 $
+
+Now we want to show $(Q_{n+1}, Q_j) = 0$, for all $ j < n+1$,
+\begin{equation}
+  \begin{split}
+    (Q_{n+1}, Q_j) = &(M_{n+1} - \sum^{n}_{i=0} \frac{(M_{n+1}, Q_i)}{(Q_i, Q_i)}Q_i, Q_j)\\
+    \text{ Case 1 : If }& n \neq j,  \\
+    = &(M_{n+1}, Q_j) - \sum^{n-1}_{\substack{i=0 \\ i \neq j}} \frac{(M_{n+1}, Q_i)}{(Q_i, Q_i)}(Q_i, Q_j) \\
+    &- \frac{(M_{n+1}, Q_n)}{(Q_n, Q_n)}(Q_n, Q_j) - \frac{(M_{n+1}, Q_j)}{(Q_j, Q_j)}(Q_j, Q_j)\\
+    = &(M_{n+1}, Q_j) - 0 - \frac{(M_{n+1}, Q_n)}{(Q_n, Q_n)} 0 - (M_{n+1}, Q_j)\\
+    = &(M_{n+1}, Q_j) - (M_{n+1}, Q_j) = 0\\
+    \text{ Case 2 : If }& n = j,  \\
+    = &(M_{n+1}, Q_j) - \sum^{n-1}_{\substack{i=0}} \frac{(M_{n+1}, Q_i)}{(Q_i, Q_i)}(Q_i, Q_n) \\
+    &- \frac{(M_{n+1}, Q_n)}{(Q_n, Q_n)}(Q_n, Q_j) \\
+    = &(M_{n+1}, Q_j) - \sum^{n-1}_{\substack{i=0}} \frac{(M_{n+1}, Q_i)}{(Q_i, Q_i)}0 - \frac{(M_{n+1}, Q_n)}{(Q_n, Q_n)}(Q_n, Q_n) \\
+    = &(M_{n+1}, Q_j) - (M_{n+1}, Q_j) = 0\\
+  \end{split}
+\end{equation}
+
+Therefore, such $\{Q_n\}^{\infty}_{n=0}$ satisfies $(Q_i,Q_j)=0, i \neq j $.
+
+\paragraph{b.}
+To get $Q_1, Q_2, Q_3, Q_4$ , we are given $Q_0 = M_0 = 1, M_1=x, M_2= x^2 , M_3=x^3, M_4 = x^4$.
+
+If $f(x)g(x)$ is odd function,
+\begin{equation}
+  \begin{split}
+    (f(x),g(x)) &= \int^{1}_{-1} f(x)g(x) dx =  \int^{1}_{0} f(x)g(x) dx +  \int^{0}_{-1} f(x)g(x) dx\\
+    &=  \int^{1}_{0} f(x)g(x) dx + \int^{0}_{-1} -f(-x)g(-x) dx\\
+    &=  \int^{1}_{0} f(x)g(x) dx + \int^{0}_{-1} f(-x)g(-x) d(-x)\\
+    &=  \int^{1}_{0} f(x)g(x) dx + \int^{0}_{1} f(x)g(x) dx\\
+    &=  \int^{1}_{0} f(x)g(x) dx - \int^{1}_{0} f(x)g(x) dx = 0\\
+  \end{split}
+\end{equation}
+
+
+\begin{equation}
+  Q_1 = x - \cancelto{0}{(x,1)}\frac{1}{(1,1)} = x
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    Q_2 &= x^2 - \cancelto{0}{(x^2,x)} \frac{x}{(x,x)} - (x^2,1)\frac{1}{(1,1)}\\
+    &= x^2 -  \int^{1}_{-1} x^2 dx \frac{1}{\int^{1}_{-1} dx}\\
+    &= x^2 -  \frac{2}{3} \frac{1}{2} = x^2 -  \frac{1}{3}
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    Q_3 &= x^3 - \cancelto{0}{(x^3, x^2 -  \frac{1}{3})} \frac{Q_2}{\Vert Q_2 \Vert^2} - (x^3,x)\frac{x}{\Vert x \Vert^2} - \cancelto{0}{(x^3,1)}\frac{1}{2}\\
+    &= x^3 - (x^3,x)\frac{x}{\Vert x \Vert^2}\\
+    &= x^3 - \frac{2}{5} \frac{3}{2} x = x^3 - \frac{3}{5}x
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    Q_4 &= x^4 - \cancelto{0}{(x^4, x^3 - \frac{3}{5}x)}\frac{Q_3}{\Vert Q_3 \Vert^2} - (x^4, x^2 - \frac{1}{3})\frac{Q_2}{\Vert Q_2 \Vert^2} - \cancelto{0}{(x^4,x)}\frac{x}{\Vert x \Vert^2} - (x^3,1)\frac{1}{2}\\
+    &= x^4 - (x^4, x^2 - \frac{1}{3})\frac{Q_2}{\Vert Q_2 \Vert^2} - (x^4,1)\frac{1}{2} \\
+    &= x^4 - \int^{1}_{-1} x^6 - \frac{ x^4}{3}dx \frac{x^2 - \frac{1}{3}}{\int^{1}_{-1} (x^2 - \frac{1}{3})^2 dx} - \frac{1}{5}\\
+    &= x^4 - (\frac{2}{7} - \frac{2}{15}) \frac{x^2 - \frac{1}{3}}{\frac{2}{5}- \frac{2}{9}} - \frac{1}{5} = x^4 - \frac{45}{8}\frac{16}{7 \times 15} x^2 - \frac{45}{8}\frac{16}{7 \times 15}\frac{1}{3} - \frac{1}{5}\\
+    &= x^4 - \frac{6}{7}x^2 + \frac{2}{7} - \frac{1}{5} = x^4 - \frac{6}{7}x^2 + \frac{3}{35}\\
+  \end{split}
+\end{equation}
+
+\paragraph{c.}
+$$ Q_1(1) = 1$$
+$$ Q_2(1) = c (1 -  \frac{1}{3}) = 1  \rightarrow c = \frac{3}{2} $$
+$$ Q_3(1) = c (1 - \frac{3}{5}) \rightarrow c = \frac{5}{2} $$
+$$ Q_4(1) = c (1 - \frac{6}{7} + \frac{3}{35}) \rightarrow c = \frac{35}{8} $$
+
+\begin{equation}
+  \begin{split}
+    &Q_1 = x\\
+    &Q_2 = \frac{3}{2} (x^2 -  \frac{1}{3})\\
+    &Q_3 = \frac{5}{2}(x^3 - \frac{3}{5}x)\\
+    &Q_4 = \frac{35}{8}(x^4 - \frac{6}{7}x^2 + \frac{3}{35})
+  \end{split}
+\end{equation}
+
+
+\subsection*{ Question 3}
+\paragraph{a.}
+Let $ f(t) = (1-2xt+t^2)^{-\frac{1}{2}}$, then $ f'(t) = -\frac{1}{2}(1-2xt+t^2)^{-\frac{3}{2}}(-2x+2t) $.
+The first two terms of maclaurin series of $f(t)$ is
+$f(t) = f(0) + f'(0)t = 1 + x t$.
+
+Thus
+\begin{equation}
+  \begin{split}
+    P_{0}(x) = f(0) = 1 \\
+    P_{1}(x) = f'(0) = x
+  \end{split}
+\end{equation}
+
+This satisfies the formula in (4.115).
+
+\paragraph{b.}
+From part a., we have LHS $  f'(t) = (1-2xt+t^2)^{-\frac{3}{2}}(x-t) = \frac{x-t}{1-2xt+t^2} f(t)$,
+and RHS $ f'(t) = \sum_{n=1}^{\infty} n P_{n}(x) t^{n-1}$.
+
+Combine two equations above,
+
+\begin{equation}
+  \begin{split}
+    &\sum_{n=1}^{\infty} n P_{n}(x) t^{n-1} =  \frac{x-t}{1-2xt+t^2} \sum_{n=0}^{\infty} P_{n}(x) t^{n} \\
+    &(1-2xt+t^2)\sum_{n=1}^{\infty} n P_{n}(x) t^{n-1} =  (x-t) \sum_{n=0}^{\infty} P_{n}(x) t^{n} \\
+    &\begin{split}
+      \sum_{n=1}^{\infty} n P_{n}(x) t^{n-1} &- 2xt \sum_{n=1}^{\infty} n P_{n}(x) t^{n-1} t^2 \sum_{n=1}^{\infty} n P_{n}(x) t^{n-1} \\
+      &= x \sum_{n=0}^{\infty} P_{n}(x) t^{n} -t \sum_{n=0}^{\infty} P_{n}(x) t^{n}\\
+      \sum_{n=1}^{\infty} n P_{n}(x) t^{n-1} &- 2x \sum_{n=1}^{\infty} n P_{n}(x) t^{n} +  \sum_{n=1}^{\infty} n P_{n}(x) t^{n+1}  \\
+      &= x \sum_{n=0}^{\infty} P_{n}(x) t^{n} -  \sum_{n=0}^{\infty} P_{n}(x) t^{n+1}
+    \end{split}
+  \end{split}
+\end{equation}
+
+Relabel the sum above,
+\begin{equation}
+  \begin{split}
+    \sum_{n=0}^{\infty} (n+1) P_{n+1}(x) t^{n} - 2x \sum_{n=1}^{\infty} n P_{n}(x) t^{n} &+  \sum_{n=2}^{\infty} (n-1) P_{n-1}(x) t^{n} \\
+    &= x \sum_{n=0}^{\infty} P_{n}(x) t^{n} -  \sum_{n=1}^{\infty} P_{n-1}(x) t^{n}
+  \end{split}
+\end{equation}
+
+Note the $ t^0 $ and $ t^1$ terms on both side can be cancelled out by given $ P_2 (x) $ formula of Legendre polynomial.
+    \begin{equation}
+      \begin{split}
+        &P_1 (x) + 2 tP_2 (x) - 2 xt P_1 (x) = x P_0 (x) + xt P_1 (x) - tP_0(x)\\
+        &2t P_2 (x) = (3xt - 1) P_1(x) + (x - t) P_0 (x)\\
+        &\text{Substitute } P_1 (x) = x, P_0 (x) = 1\\
+        &2 P_2 (x) = 3x^2 - 1\\
+      \end{split}
+    \end{equation}
+
+Then the rest terms , $n \geq 2$, can be written as
+    \begin{equation}
+      \begin{split}
+        &\begin{split}
+          \sum_{n=2}^{\infty} (n+1) P_{n+1}(x) t^{n} - 2x \sum_{n=2}^{\infty} n P_{n}(x) t^{n}& +  \sum_{n=2}^{\infty} (n-1) P_{n-1}(x) t^{n} \\
+          &= x \sum_{n=2}^{\infty} P_{n}(x) t^{n} -  \sum_{n=2}^{\infty} P_{n-1}(x) t^{n} \\
+        \end{split}\\
+        & (n+1) P_{n+1}(x)  =  2xn P_{n}(x) +  (1-n) P_{n-1}(x) + x P_{n}(x) -  P_{n-1}(x)\\
+        & (n+1) P_{n+1}(x)  =  (2n+1)x P_{n}(x) -n P_{n-1}(x)\\
+        & P_{n+1}(x)  =  \frac{2n+1}{n+1}xP_{n}(x) -\frac{n}{n+1} P_{n-1}(x)\\
+      \end{split}
+    \end{equation}
+
+Let $ n = 1$ , we have
+    \begin{equation}
+      \begin{split}
+        & P_{2}(x)  =  \frac{3}{2}xP_{1}(x) - \frac{1}{2} P_{0}(x)\\
+        & P_{2}(x)  =  \frac{3}{2}x^2 - \frac{1}{2}\\
+      \end{split}
+    \end{equation}
+
+Thus $P_{2}(x), P_{1}(x), \text{ and } P_{0}(x)$ also satisfies the recursion. Therfore For all $n \geq 1 $, we have
+$$ P_{n+1}(x)  =  \frac{2n+1}{n+1}xP_{n}(x) -\frac{n}{n+1} P_{n-1}(x) $$ .
+
+\paragraph{c.}
+
+
+First of all, in part a., we have show $P_0(x)$ and $P_1(x)$ defined here is the same as defined in Legendre polynomials.
+
+Secondly, by using the generating function, we derive the triple recursion relation in part b.
+$$ P_{n+1}(x)  =  \frac{2n+1}{n+1}xP_{n}(x) -\frac{n}{n+1} P_{n-1}(x) $$ .
+
+This is the same triple recursion relation of Legendre polynomials.
+
+Thus any $ P_{n} $ derive from the same triple recursion relation by the same $P_0(x)$ and $P_1(x)$ are identical.
+
+\paragraph{d.}
+When $x = 1$, we have $f(t) = (1 - t)^{-1}$.
+The maclaurin series of $f(t)$ is
+$$ f(t) = \sum^{\infty}_{n=0} t^n $$
+
+From the RHS of generating function, we have,
+$$ \sum^{\infty}_{n=0} t^n  =  \sum^{\infty}_{n=0} P_{n}(1) t^n $$
+$$ \rightarrow P_{n}(1) = 1$$
+
+\paragraph{e.}
+
+The triple recursion formula
+
+$$ (n+1) P_{n+1}(x) = (2n+1) x P_n (x) - n P_{n-1}(x) $$
+
+We want to show
+$$ P_n (x) = 2^n \sum_{k=0}^n \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^k$$
+
+To show it by mathematical induction, we have $ P_0 = 1 $ and $ P_1 = x$, Then
+$$ \text{By triple recursive method }P_2  = \frac{(2+1)x^2 - 1 }{1+1} = \frac{3}{2} x^2 - \frac{1}{2} $$
+By $P_n(x)$ formula
+\begin{equation}
+  \begin{split}
+    P_2 &= 2^2 \sum_{k=0}^2 \binom{2}{k} \binom{\frac{2+k-1}{2}}{2} x^k \\
+     &=  2^2 \left( \binom{2}{2} \binom{\frac{3}{2}}{2} x^2 + \binom{2}{1} \binom{\frac{2}{2}}{2} x^1 + \binom{2}{0} \binom{\frac{1}{2}}{2} x^0 \right)\\
+     &=  2^2 \left( 1 * \frac{3}{8} x^2 + 2 *0 x^1 + 1 *(-\frac{1}{8}) x^0 \right)\\
+     &=  \frac{3}{2} x^2 -\frac{1}{2} \\
+  \end{split}
+\end{equation}
+
+Now we assume $$ P_n (x) = 2^n \sum_{k=0}^n \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^k$$
+and
+$$ P_{n-1} (x) = 2^{n-1} \sum_{k=0}^{n-1} \binom{n-1}{k} \binom{\frac{n+k-2}{2}}{n-1} x^k$$
+
+By triple recursion, we have
+\begin{equation}
+  \begin{split}
+    &   (n+1)P_{n+1}(x) = (2n+1) x P_n (x) - n P_{n-1}(x)\\
+    =& (2n+1) x  2^n \sum_{k=0}^n \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^k - n 2^{n-1} \sum_{k=0}^{n-1} \binom{n-1}{k} \binom{\frac{n+k-2}{2}}{n-1} x^k\\
+    =& (2n+1) 2^n \sum_{k=0}^n \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k+1} - 2^{n-1} \sum_{k=0}^{n-1} \left( n\binom{n-1}{k}\right) \binom{\frac{n+k-2}{2}}{n-1} x^k\\
+    =& (2n+1) 2^n \sum_{k=1}^{n+1} \binom{n}{k-1} \binom{\frac{n+k-2}{2}}{n} x^{k} - 2^{n-1} \sum_{k=0}^{n-1} \left( \binom{n}{k} (n-k)\right) \binom{\frac{n+k-2}{2}}{n-1} x^k\\
+    =& (2n+1) 2^n \sum_{k=1}^{n+1} \left( \frac{k}{n+1} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}-1}{n} x^{k}\\
+    &- 2^{n}  \sum_{k=0}^{n-1}  \left(  \frac{(n-k+1)(n-k)}{2 (n+1)}\right) \binom{n+1}{k}   \binom{\frac{n+k}{2} - 1}{n-1} x^k\\
+    =& (2n+1) 2^n \sum_{k=1}^{n+1} \left( \frac{ 2 k}{n+k} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &- 2^{n}  \sum_{k=0}^{n-1}  \left(  \frac{(n-k+1)(n-k)n }{ (n+k) (n+1)}\right)  \binom{n+1}{k}   \binom{\frac{n+k}{2}}{n} x^k\\
+    =& (2n+1) 2^n \sum_{k=1}^{n+1} \left( \frac{ 2 k}{n+k} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &- 2^{n}  \sum_{k=0}^{n-1}  \left(  \frac{(n-k+1)(n-k)n }{ (n+k) (\frac{k-n}{2})}\right)  \binom{n+1}{k}   \binom{\frac{n+k}{2}}{n+1} x^k\\
+    =& (2n+1) 2^{n+1} \sum_{k=1}^{n+1} \left( \frac{k}{n+k} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &+ 2^{n+1}  \sum_{k=0}^{n-1}  \left(  \frac{(n-k+1)n }{n+k}\right)  \binom{n+1}{k}   \binom{\frac{n+k}{2}}{n+1} x^k\\
+  \end{split}
+\end{equation}
+
+For terms from $x^1$ to $x^{n-1}$ in RHS of (2)
+\begin{equation}
+  \begin{split}
+    &= 2^{n+1} \sum_{k=1}^{n-1} \left(\frac{ (2n+1) k}{n+k} + \frac{(n-k+1)n}{n+k} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &= 2^{n+1} \sum_{k=1}^{n-1} \left(\frac{ (2n+1) k + (n-k+1)n}{n+k} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &= 2^{n+1} \sum_{k=1}^{n-1} \left(\frac{ (n + k)(n+1) }{n+k} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &= 2^{n+1} \sum_{k=1}^{n-1} (n+1) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &=  (n+1) 2^{n+1} \sum_{k=1}^{n-1}\binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+  \end{split}
+\end{equation}
+
+For terms $x^{n}$ and $x^{n+1}$ in RHS of (2)
+\begin{equation}
+  \begin{split}
+    &= (2n+1) 2^{n+1} \sum_{k=n}^{n+1} \left( \frac{k}{n+k} \right) \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^{k}\\
+    &= (2n+1) 2^{n+1} \left( \frac{n}{2n} \right) \binom{n+1}{n} \binom{\frac{2n}{2}}{n+1} x^{n} + (2n+1) 2^{n+1} \left( \frac{n+1}{2n+1} \right) \binom{n+1}{n+1} \binom{\frac{2n+1}{2}}{n+1} x^{n+1}\\
+    &= (2n+1) 2^{n+1} \left( \frac{n}{2n} \right) \binom{n+1}{n} \binom{n}{n+1} x^{n} + (n+1)2^{n+1} \binom{n+1}{n+1} \binom{\frac{2n+1}{2}}{n+1} x^{n+1}\\
+    &\text{Because }\binom{n}{n+1} = 0 \text{ in $x^n$ term, we can multiply any constant to the term}\\
+    &= (n+1) 2^{n+1}  \binom{n+1}{n} \binom{n+n}{n+1} x^{n} + (n+1)2^{n+1} \binom{n+1}{n+1} \binom{\frac{2n+1}{2}}{n+1} x^{n+1}\\
+    &= (n+1) 2^{n+1} \sum_{k=n}^{n+1} \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^k
+  \end{split}
+\end{equation}
+
+For the term $x^{0}$  in RHS of (2)
+\begin{equation}
+  \begin{split}
+    &= 2^{n+1} \left(  \frac{(n+1)n }{n}\right)  \binom{n+1}{0}   \binom{\frac{n}{2}}{n+1} x^0\\
+    &= (n+1) 2^{n+1}  \binom{n+1}{0}   \binom{\frac{n}{2}}{n+1} x^0\\
+  \end{split}
+\end{equation}
+
+To sum up (3) (4) and (5), the LHS of (2)
+$$  (n+1)P_{n+1}(x) =(n+1) 2^{n+1} \sum_{k=0}^{n+1} \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^k $$
+$$  P_{n+1}(x) = 2^{n+1} \sum_{k=0}^{n+1} \binom{n+1}{k} \binom{\frac{n+k}{2}}{n+1} x^k $$
+
+Therefore $ P_n (x) = 2^n \sum_{k=0}^n \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^k$
+
+\paragraph{f.}
+We have
+$$ P_n (x) = 2^n \sum_{k=0}^n \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^k$$
+
+\begin{equation}
+  \begin{split}
+    \pdv{}{x}  P_n (x) &= 2^n \sum_{k=1}^n k \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k-1}\\
+    (1-x^2)\pdv{}{x}  P_n (x) &= 2^n \sum_{k=1}^n k \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k-1}\\
+    &-2^n \sum_{k=1}^n k \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k+1}\\
+    \pdv{}{x} [(1-x^2)\pdv{}{x}  P_n (x) ]& = 2^n \sum_{k=2}^n k (k-1)\binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k-2}\\
+    &-2^n \sum_{k=1}^n k (k+1) \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    \pdv{}{x} [(1-x^2)\pdv{}{x}  P_n (x) ]& = 2^n \sum_{k=0}^{n-2} (k+2) (k+1)\binom{n}{k+2} \binom{\frac{n+k+1}{2}}{n} x^{k}\\
+    &-2^n \sum_{k=1}^n k (k+1) \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+  \end{split}
+\end{equation}
+
+Note the terms as k = 0, n-1 and n,
+\begin{equation}
+  \begin{split}
+    \text{k = 0 term: } &2^n (0+2) (0+1)\binom{n}{0+2} \binom{\frac{n+0+1}{2}}{n} x^{0}\\
+    &= 2^n n(n-1) \binom{\frac{n+1}{2}}{n} = 2^n n(n-1) \frac{n+1}{1-n}\binom{\frac{n-1}{2}}{n}\\
+    &= - n(n+1) 2^n \binom{\frac{n-1}{2}}{n}
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    \text{k = n-1 term: }   &-2^n (n-1)n \binom{n}{n-1} \binom{n-1}{n} x^{n-1} = 0\\
+    \text{k = n term: }   &-2^n n (n+1) \binom{n}{n} \binom{\frac{2n-1}{2}}{n} x^{n}\\
+    &= - n (n+1) 2^n  \binom{n}{n} \binom{\frac{2n-1}{2}}{n} x^{n}\\
+  \end{split}
+\end{equation}
+
+Note the terms from k = 1 to n-2 of equation (11),
+\begin{equation}
+  \begin{split}
+    \pdv{}{x} & [(1-x^2)\pdv{}{x}  P_n (x) ] \\
+    &= 2^n \sum_{k=1}^{n-2} (k+2) (k+1)\binom{n}{k+2} \binom{\frac{n+k+1}{2}}{n} x^{k}\\
+    &-2^n \sum_{k=1}^{n-2} k (k+1) \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &= 2^n \sum_{k=1}^{n-2} (n-k)(n-k-1) \frac{n+k+1}{2} \frac{2}{k+1-n} \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &-2^n \sum_{k=1}^{n-2} k (k+1) \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &= - 2^n \sum_{k=1}^{n-2}(n-k)(n+k+1) \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &-2^n \sum_{k=1}^{n-2} k (k+1) \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &= 2^n \sum_{k=1}^{n-2} (-(n-k)(n+k+1) -  k (k+1))\binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &= 2^n \sum_{k=1}^{n-2} (k^2- n^2 + k-n -  k - k^2)\binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &= - n( n +1)2^n \sum_{k=1}^{n-2} \binom{n}{k} \binom{\frac{n+k-1}{2}}{n} x^{k}\\
+    &= - n( n +1)P_n (x)\\
+  \end{split}
+\end{equation}
+
+\subsection*{ Question 4}
+\subsubsection*{ 4a.}
+\begin{equation}
+  \begin{split}
+    &(1-x^2)^n = \sum_{k=0}^{n}\binom{n}{k} (-x^2)^k = \sum_{k=0}^{n}\binom{n}{k} (-1)^k x^{2k} \\
+    &\dv[n]{}{x} (1-x^2)^n = \sum_{k=0}^{n}\binom{n}{k}(-1)^k \dv[n]{}{x} x^{2k} = n! \sum_{k=\frac{n}{2}}^{n}\binom{n}{k} (-1)^k \binom{2k}{n} x^{2k-n}\\
+  \end{split}
+\end{equation}
+
+Thus, the highet order term of $P_n(x)$ is $\frac{(-1)^n }{2^n} \binom{2n}{n} x^{n} \neq 0$, so  $P_n(x)$ is a polynomials with degree n.
+
+\subsubsection*{ 4b.}
+
+Given $ P_n(x) = \frac{1}{2^n n!}\dv[n]{(1-x^2)^n}{x}$ and $P_m(x) =  \frac{1}{2^m m!} \dv[m]{(1-x^2)^m}{x}$.
+
+First of all, we will show $\dv[n-k]{(1-x^2)^n}{x} \vert^1_{-1} = 0, k \leq n$.
+
+$$ \dv[n-k]{(1-x^2)^n}{x} \Big\vert^1_{-1} = \sum^{n-k}_{s=1} \sum^{s}_{k=1} (x-1)^{n-p} (x+1)^{n-s+p} DL((x-1)^n (x+1)^n) \Big\vert^1_{-1} = 0$$
+where,  $DL((x^n y^n)$ is linear combination of some derivates of $x^n y^n$
+
+\begin{equation}
+  \begin{split}
+    \int^{1}_{-1} & P_n(x) P_m(x) dx = \frac{1}{2^n n!} \frac{1}{2^m m!} \int^{1}_{-1}\dv[n]{(1-x^2)^n}{x} \dv[m]{(1-x^2)^m}{x} dx\\
+    =& \frac{1}{2^n n!} \frac{1}{2^m m!} ( \cancelto{0}{\dv[n-1]{(1-x^2)^n}{x} \dv[m]{(1-x^2)^m}{x}\Big\vert^1_{-1}}\\
+    &- \int^{1}_{-1}\dv[n-1]{(1-x^2)^n}{x} \dv[m+1]{(1-x^2)^m}{x} dx)\\
+    &\text{Repeat the integral by parts until the following steps }\\
+    =& \frac{1}{2^n n!} \frac{1}{2^m m!} ( \cancelto{0}{\dv[n-m-1]{(1-x^2)^n}{x} \dv[2m]{(1-x^2)^m}{x}\Big\vert^1_{-1}}\\
+    &- \int^{1}_{-1}\dv[n-m-1]{(1-x^2)^n}{x} \dv[2m+1]{(1-x^2)^m}{x} dx)\\
+  \end{split}
+\end{equation}
+
+We know $(1-x^2)^m$ is 2m degree polynomials of x, therefore  $\dv[2m+1]{(1-x^2)^m}{x} = 0$. That is
+\begin{equation}
+  \begin{split}
+    \int^{1}_{-1} & P_n(x) P_m(x) dx = - \int^{1}_{-1}\dv[n-m-1]{(1-x^2)^n}{x} \cancelto{0}{\dv[2m+1]{(1-x^2)^m}{x}} dx = 0
+  \end{split}
+\end{equation}
+
+
+
+\end{document}
